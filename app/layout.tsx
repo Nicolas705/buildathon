@@ -61,6 +61,11 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Spline Performance Optimizations */}
+        <link rel="preconnect" href="https://prod.spline.design" />
+        <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <link rel="prefetch" href="https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode" as="fetch" crossOrigin="anonymous" />
+        <script src="/spline-preload.js" async />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />

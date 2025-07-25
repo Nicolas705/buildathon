@@ -4,17 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import SplineIntro to ensure it only loads on the client
+// Dynamically import SplineIntro with preload hint
 const SplineIntro = dynamic(() => import('./components/SplineIntro'), {
   ssr: false,
-  loading: () => (
-    <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
-      <div className="text-center">
-        <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
-        <div className="text-accent font-mono text-sm">loading signal...</div>
-      </div>
-    </div>
-  ),
+  loading: () => null, // Minimize loading state for faster perceived performance
 });
 
 // Terminal loading sequence data
@@ -557,8 +550,18 @@ export default function Home() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
+    // Preload Spline scene as soon as possible
+    if (typeof window !== 'undefined') {
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = 'https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode';
+      link.as = 'fetch';
+      link.crossOrigin = 'anonymous';
+      document.head.appendChild(link);
+    }
+
     // Start matrix effect after all loading is complete
-    const timer = setTimeout(() => setShowMatrix(true), 8000); // Extended timing for Spline + Terminal
+    const timer = setTimeout(() => setShowMatrix(true), 15000); // Extended timing for longer Spline + Terminal
     return () => clearTimeout(timer);
   }, []);
 
@@ -578,7 +581,7 @@ export default function Home() {
       
       <AnimatePresence mode="wait">
                   {showSpline ? (
-            <SplineIntro onComplete={handleSplineComplete} duration={6000} />
+            <SplineIntro onComplete={handleSplineComplete} duration={10000} />
           ) : isLoading ? (
           <TerminalLoader onComplete={handleLoadingComplete} />
         ) : (

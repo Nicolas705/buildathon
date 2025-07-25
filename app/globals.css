@@ -62,23 +62,31 @@ body::before {
   75% { transform: translateY(10px) translateX(5px); }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Hidden */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0px;
+  display: none;
+}
+
+/* Alternative: Keep scrollbar but make it dark/subtle */
+/* 
+::-webkit-scrollbar {
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 4px;
+  background: var(--card-border);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-hover);
+  background: var(--foreground)/20;
 }
+*/
 
 /* Terminal-like selection styling */
 ::selection {
