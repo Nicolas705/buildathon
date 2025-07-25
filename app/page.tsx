@@ -2,6 +2,20 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import SplineIntro to ensure it only loads on the client
+const SplineIntro = dynamic(() => import('./components/SplineIntro'), {
+  ssr: false,
+  loading: () => (
+    <div className="fixed inset-0 bg-background flex items-center justify-center z-50">
+      <div className="text-center">
+        <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mb-4 mx-auto" />
+        <div className="text-accent font-mono text-sm">loading signal...</div>
+      </div>
+    </div>
+  ),
+});
 
 // Terminal loading sequence data
 const bootSequence = [
@@ -537,15 +551,21 @@ function MatrixBackground() {
 }
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [showSpline, setShowSpline] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [showMatrix, setShowMatrix] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
-    // Start matrix effect after initial load
-    const timer = setTimeout(() => setShowMatrix(true), 4000);
+    // Start matrix effect after all loading is complete
+    const timer = setTimeout(() => setShowMatrix(true), 8000); // Extended timing for Spline + Terminal
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSplineComplete = () => {
+    setShowSpline(false);
+    setIsLoading(true);
+  };
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -557,7 +577,9 @@ export default function Home() {
       {showMatrix && <MatrixBackground />}
       
       <AnimatePresence mode="wait">
-        {isLoading ? (
+                  {showSpline ? (
+            <SplineIntro onComplete={handleSplineComplete} duration={6000} />
+          ) : isLoading ? (
           <TerminalLoader onComplete={handleLoadingComplete} />
         ) : (
           <motion.div
