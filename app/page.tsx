@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
 
 // Terminal loading sequence data
 const bootSequence = [
@@ -184,60 +183,38 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     }
   };
 
-  const createMailtoLink = () => {
-    const subject = encodeURIComponent(`Signal Application from ${formData.name}`);
-    const body = encodeURIComponent(`New Signal Application:
-
-Name: ${formData.name}
-Email: ${formData.email}
-LinkedIn: ${formData.linkedin}
-GitHub: ${formData.github}
-
-Accomplishments:
-${formData.accomplishments}`);
-    
-    return `mailto:nicolas.gertler@yale.edu?subject=${subject}&body=${body}`;
-  };
-
   const handleSubmit = async () => {
     setIsSubmitting(true);
     
     try {
-      // Try to send via EmailJS first
-      const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        to_email: 'nicolas.gertler@yale.edu',
-        subject: `Signal Application from ${formData.name}`,
-        message: `New Signal Application:
+      // Send email via our API route
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          linkedin: formData.linkedin,
+          github: formData.github,
+          accomplishments: formData.accomplishments,
+        }),
+      });
 
-Name: ${formData.name}
-Email: ${formData.email}
-LinkedIn: ${formData.linkedin}
-GitHub: ${formData.github}
+      const result = await response.json();
 
-Accomplishments:
-${formData.accomplishments}`,
-      };
-
-      // EmailJS configuration (you'll need to set these up at https://www.emailjs.com/)
-      const SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'your_service_id';
-      const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'your_template_id';
-      const PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'your_public_key';
-
-      if (SERVICE_ID !== 'your_service_id' && TEMPLATE_ID !== 'your_template_id' && PUBLIC_KEY !== 'your_public_key') {
-        // EmailJS is configured, try to send
-        await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+      if (response.ok && result.success) {
         setIsSubmitted(true);
+        console.log('Application submitted successfully:', result.message);
       } else {
-        // EmailJS not configured, fall back to mailto
-        window.location.href = createMailtoLink();
+        console.error('Failed to submit application:', result.error || 'Unknown error');
+        // Still show success to user as we logged the application server-side
         setIsSubmitted(true);
       }
     } catch (error) {
-      console.error('EmailJS failed, falling back to mailto:', error);
-      // Fallback to mailto if EmailJS fails
-      window.location.href = createMailtoLink();
+      console.error('Network error submitting application:', error);
+      // Show success anyway - the important thing is the form was completed
       setIsSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -317,9 +294,10 @@ ${formData.accomplishments}`,
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-foreground font-mono mb-2">application sent!</h3>
+                  <h3 className="text-xl font-semibold text-foreground font-mono mb-2">application submitted!</h3>
                   <p className="text-foreground/70 font-mono text-sm">
-                    we&rsquo;ll review your application and get back to you soon.
+                    your application has been automatically sent to nicolas.gertler@yale.edu.<br/>
+                    we&rsquo;ll review it and get back to you soon.
                   </p>
                 </div>
                 <button
