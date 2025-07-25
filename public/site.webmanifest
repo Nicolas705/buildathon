@@ -1,7 +1,7 @@
 {
-  "name": "Signal — Yale's 10 Exceptional Builders",
-  "short_name": "Signal",
-  "description": "Weekly dinners with top VCs and operators",
+  "name": "signal — 10 builders. weekly vc dinners.",
+  "short_name": "signal",
+  "description": "every thursday. 10 builders. top-tier vcs and operators.",
   "icons": [
     {
       "src": "/favicon.ico",
@@ -9,8 +9,8 @@
       "type": "image/x-icon"
     }
   ],
-  "theme_color": "#0066ff",
-  "background_color": "#ffffff",
+  "theme_color": "#00ff88",
+  "background_color": "#0f0f0f",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
