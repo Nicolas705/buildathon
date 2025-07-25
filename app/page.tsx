@@ -577,7 +577,7 @@ export default function Home() {
             className="w-full relative z-10 min-h-screen flex flex-col"
           >
             {/* Hero Section */}
-            <section className="relative px-6 py-20 sm:px-8 lg:px-12 w-full flex-1 flex items-center justify-center">
+            <section className="relative px-6 py-8 sm:px-8 lg:px-12 w-full flex-1 flex items-start justify-center pt-16">
               <div className="max-w-4xl mx-auto">
                 <motion.div
                   initial="hidden"
@@ -621,45 +621,24 @@ export default function Home() {
                     >
                       signal
                     </motion.span>
-                    <br />
-                    <motion.span 
-                      className="text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground/80"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.5, duration: 0.8 }}
-                    >
-                      10 builders. weekly vc dinners.
-                    </motion.span>
                   </motion.h1>
-                  
+
+                  {/* Subtitle moved closer to title */}
                   <motion.div
-                    variants={itemVariants}
-                    className="flex flex-wrap justify-center gap-4 text-sm font-mono"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.5, duration: 0.8 }}
+                    className="-mt-4 mb-16"
                   >
-                    {[
-                      { label: "online", value: "online", color: "green-400", pulse: true },
-                      { label: "commits", value: "∞", color: "accent" },
-                      { label: "location", value: "new haven", color: "foreground" }
-                    ].map((item, index) => (
-                      <motion.div
-                        key={item.label}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 2 + index * 0.2, duration: 0.5 }}
-                        className="flex items-center space-x-2 px-4 py-3 bg-card-bg border border-card-border rounded-lg hover:border-accent/50 transition-colors duration-300"
-                      >
-                        {item.pulse && (
-                          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                        )}
-                        <span className="text-foreground/70">{item.label === "online" ? "" : `${item.label}:`}</span>
-                        <span className={`text-${item.color}`}>{item.value}</span>
-                      </motion.div>
-                    ))}
+                    <span className="text-4xl sm:text-5xl lg:text-6xl font-normal text-foreground/80">
+                      10 builders. weekly vc dinners.
+                    </span>
                   </motion.div>
 
+                  {/* Apply button with much more spacing */}
                   <motion.div
                     variants={itemVariants}
-                    className="pt-8"
+                    className="pt-64"
                   >
                     <motion.button
                       onClick={() => setIsContactModalOpen(true)}
@@ -688,7 +667,7 @@ export default function Home() {
             </section>
 
             {/* Contact & Footer Section */}
-            <footer className="w-full px-6 py-12 sm:px-8 lg:px-12 mt-auto">
+            <footer className="w-full px-6 py-8 sm:px-8 lg:px-12 mt-auto">
               <div className="max-w-4xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -733,7 +712,7 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 4.8, duration: 0.6 }}
-                    className="text-xs text-foreground/40 font-mono"
+                    className="text-xs text-foreground/80 font-mono"
                   >
                      high-signal minds designing the next decade.
                   </motion.div>
