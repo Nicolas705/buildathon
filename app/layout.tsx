@@ -3,7 +3,7 @@ import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "signal — 10 builders. weekly vc dinners.",
+  title: "Signal — 10 builders. weekly vc dinners.",
   description: "every thursday. 10 builders. top-tier vcs and operators. no bs networking. just real conversations about building the future.",
   keywords: "Yale, builders, entrepreneurs, VCs, venture capital, startup, founders, signal, developers, innovation, weekly dinners",
   authors: [{ name: "signal" }],
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "signal — 10 builders. weekly vc dinners.",
+    title: "Signal — 10 builders. weekly vc dinners.",
     description: "every thursday. 10 builders. top-tier vcs and operators. no bs networking.",
     url: 'https://signal-yale.vercel.app',
     siteName: 'signal',
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'signal — 10 builders. weekly vc dinners.',
+        alt: 'Signal — 10 builders. weekly vc dinners.',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "signal — 10 builders. weekly vc dinners.",
+    title: "Signal — 10 builders. weekly vc dinners.",
     description: "every thursday. 10 builders. top-tier vcs and operators.",
     images: ['/og-image.svg'],
   },

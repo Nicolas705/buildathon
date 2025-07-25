@@ -44,6 +44,51 @@ interface FormData {
   accomplishments: string;
 }
 
+// Validation error interface (for future use)
+// interface ValidationError {
+//   field: string;
+//   message: string;
+// }
+
+// Validation functions
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validateGithubUrl = (url: string): boolean => {
+  const githubRegex = /^https?:\/\/(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
+  return githubRegex.test(url);
+};
+
+const validateLinkedInUrl = (url: string): boolean => {
+  const linkedinRegex = /^https?:\/\/(www\.)?linkedin\.com\/(in|pub)\/[a-zA-Z0-9_-]+\/?$/;
+  return linkedinRegex.test(url);
+};
+
+const validateName = (name: string): boolean => {
+  return name.trim().length >= 2 && name.trim().length <= 50 && /^[a-zA-Z\s'-]+$/.test(name.trim());
+};
+
+const validateAccomplishments = (text: string): boolean => {
+  const trimmed = text.trim();
+  return trimmed.length >= 50 && trimmed.length <= 2000 && !isSpamContent(trimmed);
+};
+
+const isSpamContent = (text: string): boolean => {
+  const spamPatterns = [
+    /(.)\1{10,}/i, // Repeated characters
+    /https?:\/\/[^\s]+/gi, // Multiple URLs
+    /\b(viagra|casino|lottery|winner|congratulations|urgent|act now)\b/gi, // Spam keywords
+    /[^\w\s]{5,}/i, // Too many special characters
+  ];
+  
+  const urlCount = (text.match(/https?:\/\/[^\s]+/gi) || []).length;
+  if (urlCount > 2) return true; // Too many URLs
+  
+  return spamPatterns.some(pattern => pattern.test(text));
+};
+
 // Terminal loading component
 function TerminalLoader({ onComplete }: { onComplete: () => void }) {
   const [currentLine, setCurrentLine] = useState(0);
@@ -136,6 +181,7 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [validationError, setValidationError] = useState<string>('');
 
   const steps = [
     {
@@ -161,9 +207,9 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     },
     {
       id: 'github',
-      question: 'github username?',
-      placeholder: '@alexchen',
-      type: 'text',
+      question: 'github profile link?',
+      placeholder: 'https://github.com/alexchen',
+      type: 'url',
       field: 'github' as keyof FormData
     },
     {
@@ -175,9 +221,55 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     }
   ];
 
+  const validateCurrentField = (): boolean => {
+    const currentField = steps[currentStep].field;
+    const value = formData[currentField];
+    
+    setValidationError('');
+    
+    switch (currentField) {
+      case 'name':
+        if (!validateName(value)) {
+          setValidationError('Name must be 2-50 characters and contain only letters, spaces, hyphens, and apostrophes');
+          return false;
+        }
+        break;
+      case 'email':
+        if (!validateEmail(value)) {
+          setValidationError('Please enter a valid email address');
+          return false;
+        }
+        break;
+      case 'linkedin':
+        if (value && !validateLinkedInUrl(value)) {
+          setValidationError('Please enter a valid LinkedIn profile URL (e.g., https://linkedin.com/in/username)');
+          return false;
+        }
+        break;
+      case 'github':
+        if (!validateGithubUrl(value)) {
+          setValidationError('Please enter a valid GitHub profile URL (e.g., https://github.com/username)');
+          return false;
+        }
+        break;
+      case 'accomplishments':
+        if (!validateAccomplishments(value)) {
+          setValidationError('Please provide a detailed response (50-2000 characters) about your accomplishments');
+          return false;
+        }
+        break;
+    }
+    return true;
+  };
+
   const handleNext = () => {
+    if (!validateCurrentField()) {
+      return;
+    }
+    
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
+      setValidationError('');
     } else {
       handleSubmit();
     }
@@ -223,7 +315,8 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 
   const currentStepData = steps[currentStep];
   const isLastStep = currentStep === steps.length - 1;
-  const canProceed = formData[currentStepData?.field];
+  const currentValue = formData[currentStepData?.field];
+  const canProceed = currentValue && currentValue.trim().length > 0 && !validationError;
 
   if (!isOpen) return null;
 
@@ -329,18 +422,28 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                   {currentStepData.type === 'textarea' ? (
                     <textarea
                       value={formData[currentStepData.field]}
-                      onChange={(e) => setFormData(prev => ({ ...prev, [currentStepData.field]: e.target.value }))}
+                      onChange={(e) => {
+                        setFormData(prev => ({ ...prev, [currentStepData.field]: e.target.value }));
+                        setValidationError(''); // Clear error on input
+                      }}
                       placeholder={currentStepData.placeholder}
-                      className="w-full bg-background border border-card-border rounded-lg p-4 text-foreground font-mono text-sm resize-none h-32 focus:outline-none focus:border-accent transition-colors"
+                      className={`w-full bg-background border rounded-lg p-4 text-foreground font-mono text-sm resize-none h-32 focus:outline-none transition-colors ${
+                        validationError ? 'border-red-500 focus:border-red-500' : 'border-card-border focus:border-accent'
+                      }`}
                       autoFocus
                     />
                   ) : (
                     <input
                       type={currentStepData.type}
                       value={formData[currentStepData.field]}
-                      onChange={(e) => setFormData(prev => ({ ...prev, [currentStepData.field]: e.target.value }))}
+                      onChange={(e) => {
+                        setFormData(prev => ({ ...prev, [currentStepData.field]: e.target.value }));
+                        setValidationError(''); // Clear error on input
+                      }}
                       placeholder={currentStepData.placeholder}
-                      className="w-full bg-background border border-card-border rounded-lg p-4 text-foreground font-mono text-sm focus:outline-none focus:border-accent transition-colors"
+                      className={`w-full bg-background border rounded-lg p-4 text-foreground font-mono text-sm focus:outline-none transition-colors ${
+                        validationError ? 'border-red-500 focus:border-red-500' : 'border-card-border focus:border-accent'
+                      }`}
                       autoFocus
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && canProceed) {
@@ -348,6 +451,17 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                         }
                       }}
                     />
+                  )}
+
+                  {/* Error message display */}
+                  {validationError && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg"
+                    >
+                      <p className="text-red-400 font-mono text-xs">{validationError}</p>
+                    </motion.div>
                   )}
                 </motion.div>
 
