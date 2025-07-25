@@ -725,7 +725,7 @@ export default function Home() {
                     transition={{ delay: 4.8, duration: 0.6 }}
                     className="text-xs text-foreground/40 font-mono"
                   >
-                    built with ❤️ by builders, for builders
+                     high-signal minds designing the next decade.
                   </motion.div>
                 </motion.div>
               </div>
