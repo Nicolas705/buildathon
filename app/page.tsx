@@ -42,6 +42,7 @@ interface FormData {
   email: string;
   linkedin: string;
   github: string;
+  accomplishments: string;
 }
 
 // Terminal loading component
@@ -131,7 +132,8 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     name: '',
     email: '',
     linkedin: '',
-    github: ''
+    github: '',
+    accomplishments: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -164,6 +166,13 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       placeholder: '@alexchen',
       type: 'text',
       field: 'github' as keyof FormData
+    },
+    {
+      id: 'accomplishments',
+      question: 'what are your most remarkable entrepreneurial or technical achievements?',
+      placeholder: 'Built a fintech app that processed $1M+ in transactions, created an open-source ML library with 10k+ stars, launched a startup that scaled to 50k users...',
+      type: 'textarea',
+      field: 'accomplishments' as keyof FormData
     }
   ];
 
@@ -182,7 +191,10 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 Name: ${formData.name}
 Email: ${formData.email}
 LinkedIn: ${formData.linkedin}
-GitHub: ${formData.github}`);
+GitHub: ${formData.github}
+
+Accomplishments:
+${formData.accomplishments}`);
     
     return `mailto:nicolas.gertler@yale.edu?subject=${subject}&body=${body}`;
   };
@@ -202,7 +214,10 @@ GitHub: ${formData.github}`);
 Name: ${formData.name}
 Email: ${formData.email}
 LinkedIn: ${formData.linkedin}
-GitHub: ${formData.github}`,
+GitHub: ${formData.github}
+
+Accomplishments:
+${formData.accomplishments}`,
       };
 
       // EmailJS configuration (you'll need to set these up at https://www.emailjs.com/)
@@ -396,187 +411,34 @@ GitHub: ${formData.github}`,
   );
 }
 
-// Epic Matrix-style background effect
+// Matrix-style background effect
 function MatrixBackground() {
-  const chars = ['0', '1', '█', '▓', '▒', '░', '◆', '◇', '▣', '▤'];
-  
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {/* Primary fast-falling matrix */}
-      {Array.from({ length: 35 }).map((_, i) => (
+      {Array.from({ length: 20 }).map((_, i) => (
         <motion.div
-          key={`primary-${i}`}
-          className="absolute font-mono text-xs"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `-20%`,
-            filter: `hue-rotate(${Math.random() * 60}deg)`,
-          }}
-          animate={{
-            y: ["0vh", "120vh"],
-            opacity: [0, 1, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 6 + 4,
-            repeat: Infinity,
-            ease: "linear" as const,
-            delay: Math.random() * 8,
-          }}
-        >
-          {Array.from({ length: Math.floor(Math.random() * 15) + 8 }).map((_, j) => {
-            const isGlowing = Math.random() > 0.7;
-            const char = chars[Math.floor(Math.random() * chars.length)];
-            return (
-              <motion.div 
-                key={j} 
-                className={`mb-1 ${isGlowing 
-                  ? 'text-accent drop-shadow-[0_0_8px_rgba(0,255,136,0.8)] animate-pulse' 
-                  : j === 0 
-                    ? 'text-accent/90 drop-shadow-[0_0_4px_rgba(0,255,136,0.6)]'
-                    : j < 3
-                      ? 'text-accent/60'
-                      : 'text-accent/20'
-                }`}
-                animate={isGlowing ? {
-                  textShadow: [
-                    "0 0 8px rgba(0,255,136,0.8)",
-                    "0 0 15px rgba(0,255,136,1)",
-                    "0 0 8px rgba(0,255,136,0.8)"
-                  ]
-                } : {}}
-                transition={{ duration: 0.5, repeat: Infinity }}
-              >
-                {char}
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      ))}
-
-      {/* Secondary slower particles */}
-      {Array.from({ length: 25 }).map((_, i) => (
-        <motion.div
-          key={`secondary-${i}`}
-          className="absolute font-mono text-[10px] text-cyan-400/30"
+          key={i}
+          className="absolute text-accent/10 font-mono text-xs"
           style={{
             left: `${Math.random() * 100}%`,
             top: `-10%`,
           }}
           animate={{
             y: ["0vh", "110vh"],
-            x: [0, Math.sin(i) * 20, 0],
-            opacity: [0, 0.8, 0.8, 0],
           }}
           transition={{
-            duration: Math.random() * 15 + 12,
+            duration: Math.random() * 10 + 10,
             repeat: Infinity,
             ease: "linear" as const,
-            delay: Math.random() * 10,
+            delay: Math.random() * 5,
           }}
         >
-          {Array.from({ length: Math.floor(Math.random() * 8) + 3 }).map((_, j) => (
-            <div key={j} className="mb-2">
-              {Math.random() > 0.3 ? chars[Math.floor(Math.random() * 2)] : chars[Math.floor(Math.random() * chars.length)]}
+          {Array.from({ length: Math.floor(Math.random() * 10) + 5 }).map((_, j) => (
+            <div key={j} className="mb-1">
+              {Math.random() > 0.5 ? '1' : '0'}
             </div>
           ))}
         </motion.div>
-      ))}
-
-      {/* Floating glitch particles */}
-      {Array.from({ length: 15 }).map((_, i) => (
-        <motion.div
-          key={`glitch-${i}`}
-          className="absolute font-mono text-lg font-bold"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            x: [0, Math.random() * 50 - 25, 0],
-            y: [0, Math.random() * 30 - 15, 0],
-            opacity: [0, 1, 0],
-            scale: [0.5, 1.2, 0.5],
-          }}
-          transition={{
-            duration: Math.random() * 4 + 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: Math.random() * 6,
-          }}
-        >
-          <span className="text-accent/60 drop-shadow-[0_0_12px_rgba(0,255,136,0.9)]">
-            {chars[Math.floor(Math.random() * chars.length)]}
-          </span>
-        </motion.div>
-      ))}
-
-      {/* Wave effect across screen */}
-      {Array.from({ length: 8 }).map((_, i) => (
-        <motion.div
-          key={`wave-${i}`}
-          className="absolute w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"
-          style={{
-            top: `${i * 12.5}%`,
-          }}
-          animate={{
-            x: ["-100%", "100%"],
-            opacity: [0, 0.8, 0],
-          }}
-          transition={{
-            duration: Math.random() * 8 + 6,
-            repeat: Infinity,
-            ease: "linear" as const,
-            delay: Math.random() * 4,
-          }}
-        />
-      ))}
-
-      {/* Pulsing grid overlay */}
-      <motion.div
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0,255,136,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,255,136,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-        }}
-        animate={{
-          opacity: [0.02, 0.08, 0.02],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
-      {/* Corner accent beams */}
-      {['top-left', 'top-right', 'bottom-left', 'bottom-right'].map((corner, i) => (
-        <motion.div
-          key={corner}
-          className={`absolute w-32 h-32 ${
-            corner.includes('top') ? 'top-0' : 'bottom-0'
-          } ${
-            corner.includes('left') ? 'left-0' : 'right-0'
-          }`}
-          style={{
-            background: `radial-gradient(circle at ${
-              corner.includes('left') ? '0% ' : '100% '
-            }${
-              corner.includes('top') ? '0%' : '100%'
-            }, rgba(0,255,136,0.15) 0%, transparent 70%)`,
-          }}
-          animate={{
-            opacity: [0.3, 0.8, 0.3],
-          }}
-          transition={{
-            duration: 3 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.5,
-          }}
-        />
       ))}
     </div>
   );
