@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Spline from '@splinetool/react-spline';
+import { Loader2 } from 'lucide-react';
 
 interface SplineIntroProps {
   onComplete: () => void;
@@ -96,20 +97,20 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="absolute inset-0"
           >
-            <Spline
-              scene="https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode"
-              onLoad={handleSplineLoad}
-              onError={handleSplineError}
-              style={{
-                width: '100%',
-                height: '100%',
-                opacity: isLoading ? 0.3 : 1,
-                transition: 'opacity 0.5s ease-out',
-              }}
-            />
+                          <Spline
+                scene="https://prod.spline.design/6Ra-6TOXEw3lYhqa/scene.splinecode"
+                onLoad={handleSplineLoad}
+                onError={handleSplineError}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  opacity: isLoading ? 0.3 : 1,
+                  transition: 'opacity 0.5s ease-out',
+                }}
+              />
           </motion.div>
 
-          {/* Ultra-light loading overlay */}
+          {/* Simple loading overlay */}
           <AnimatePresence>
             {isLoading && (
               <motion.div
@@ -120,32 +121,7 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
               >
                 <div className="text-center">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    className="w-12 h-12 mx-auto mb-3"
-                  >
-                    <svg className="w-full h-full" viewBox="0 0 24 24">
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        fill="none"
-                      />
-                      <path
-                        className="opacity-75 text-accent"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      />
-                    </svg>
-                  </motion.div>
-                  <p className="text-accent font-mono text-xs opacity-70">loading scene...</p>
+                  <Loader2 className="w-8 h-8 text-accent/50 animate-spin mx-auto" />
                 </div>
               </motion.div>
             )}
@@ -189,17 +165,17 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
               </div>
             </div>
 
-            {/* Skip Button */}
+            {/* Skip Button - appears earlier for better UX */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 3, duration: 0.5 }}
+              transition={{ delay: 2, duration: 0.5 }}
               className="text-center"
             >
               <button
                 onClick={handleSkip}
                 className="text-foreground/30 hover:text-foreground/60 font-mono text-xs px-3 py-1.5 
-                         transition-colors duration-200"
+                         transition-colors duration-200 hover:scale-105 active:scale-95"
               >
                 skip →
               </button>

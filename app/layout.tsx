@@ -64,6 +64,7 @@ export default function RootLayout({
         {/* Spline Performance Optimizations */}
         <link rel="preconnect" href="https://prod.spline.design" />
         <link rel="dns-prefetch" href="https://prod.spline.design" />
+        <link rel="prefetch" href="https://prod.spline.design/6Ra-6TOXEw3lYhqa/scene.splinecode" as="fetch" crossOrigin="anonymous" />
         <link rel="prefetch" href="https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode" as="fetch" crossOrigin="anonymous" />
         <script src="/spline-preload.js" async />
         <link rel="icon" href="/favicon.ico" />

@@ -10,6 +10,11 @@ const SplineIntro = dynamic(() => import('./components/SplineIntro'), {
   loading: () => null, // Minimize loading state for faster perceived performance
 });
 
+// Dynamically import SplineBackground
+const SplineBackground = dynamic(() => import('./components/SplineBackground'), {
+  ssr: false,
+});
+
 // Terminal loading sequence data
 const bootSequence = [
   { text: "$ initializing signal...", delay: 350 },
@@ -510,58 +515,38 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   );
 }
 
-// Matrix-style background effect
-function MatrixBackground() {
-  return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 20 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-accent/10 font-mono text-xs"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `-10%`,
-          }}
-          animate={{
-            y: ["0vh", "110vh"],
-          }}
-          transition={{
-            duration: Math.random() * 10 + 10,
-            repeat: Infinity,
-            ease: "linear" as const,
-            delay: Math.random() * 5,
-          }}
-        >
-          {Array.from({ length: Math.floor(Math.random() * 10) + 5 }).map((_, j) => (
-            <div key={j} className="mb-1">
-              {Math.random() > 0.5 ? '1' : '0'}
-            </div>
-          ))}
-        </motion.div>
-      ))}
-    </div>
-  );
-}
+
 
 export default function Home() {
   const [showSpline, setShowSpline] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [showMatrix, setShowMatrix] = useState(false);
+  const [showBackground, setShowBackground] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
-    // Preload Spline scene as soon as possible
+    // Preload Spline scenes for optimal performance
     if (typeof window !== 'undefined') {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = 'https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode';
-      link.as = 'fetch';
-      link.crossOrigin = 'anonymous';
-      document.head.appendChild(link);
+      // Preload intro scene
+      const introLink = document.createElement('link');
+      introLink.rel = 'prefetch';
+      introLink.href = 'https://prod.spline.design/6Ra-6TOXEw3lYhqa/scene.splinecode';
+      introLink.as = 'fetch';
+      introLink.crossOrigin = 'anonymous';
+      document.head.appendChild(introLink);
+      
+      // Preload background scene with slight delay
+      setTimeout(() => {
+        const bgLink = document.createElement('link');
+        bgLink.rel = 'prefetch';
+        bgLink.href = 'https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode';
+        bgLink.as = 'fetch';
+        bgLink.crossOrigin = 'anonymous';
+        document.head.appendChild(bgLink);
+      }, 2000);
     }
 
-    // Start matrix effect after all loading is complete
-    const timer = setTimeout(() => setShowMatrix(true), 15000); // Extended timing for longer Spline + Terminal
+    // Start background effect after intro completes
+    const timer = setTimeout(() => setShowBackground(true), 8000); // Start shortly after intro
     return () => clearTimeout(timer);
   }, []);
 
@@ -576,12 +561,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background relative flex items-center justify-center overflow-hidden">
-      {/* Matrix background effect */}
-      {showMatrix && <MatrixBackground />}
+      {/* Spline background effect */}
+      {showBackground && <SplineBackground />}
       
       <AnimatePresence mode="wait">
                   {showSpline ? (
-            <SplineIntro onComplete={handleSplineComplete} duration={10000} />
+            <SplineIntro onComplete={handleSplineComplete} duration={7000} />
           ) : isLoading ? (
           <TerminalLoader onComplete={handleLoadingComplete} />
         ) : (
