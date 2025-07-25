@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 
 // Terminal loading sequence data
 const bootSequence = [
-  { text: "$ initializing signal...", delay: 200 },
-  { text: "✓ connecting to yale network", delay: 600 },
-  { text: "✓ establishing secure connection", delay: 700 },
-  { text: "$ signal ready", delay: 800 }
+  { text: "$ initializing signal...", delay: 250 },
+  { text: "✓ connecting to yale network", delay: 650 },
+  { text: "✓ establishing secure connection", delay: 750 },
+  { text: "$ signal ready", delay: 850 }
 ];
 
 // Enhanced animation variants for the hero section
@@ -296,7 +296,7 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
                 <div>
                   <h3 className="text-xl font-semibold text-foreground font-mono mb-2">application submitted!</h3>
                   <p className="text-foreground/70 font-mono text-sm">
-                    your application has been automatically sent to nicolas.gertler@yale.edu.<br/>
+                    your application has been submitted to Signal.<br/>
                     we&rsquo;ll review it and get back to you soon.
                   </p>
                 </div>
@@ -450,10 +450,10 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" as const }}
-            className="w-full relative z-10"
+            className="w-full relative z-10 min-h-screen flex flex-col"
           >
             {/* Hero Section */}
-            <section className="relative px-6 py-20 sm:px-8 lg:px-12 w-full">
+            <section className="relative px-6 py-20 sm:px-8 lg:px-12 w-full flex-1 flex items-center justify-center">
               <div className="max-w-4xl mx-auto">
                 <motion.div
                   initial="hidden"
@@ -563,18 +563,56 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Minimal Footer */}
-            <footer className="absolute bottom-0 left-0 right-0 px-6 py-8 sm:px-8 lg:px-12">
-              <div className="max-w-6xl mx-auto">
+            {/* Contact & Footer Section */}
+            <footer className="w-full px-6 py-12 sm:px-8 lg:px-12 mt-auto">
+              <div className="max-w-4xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 4, duration: 0.6 }}
-                  className="text-center"
+                  className="text-center space-y-8"
                 >
-                  <div className="text-xs text-foreground/40 font-mono">
-                    built with ❤️ by builders, for builders
+                  {/* Contact Button - Prominently displayed */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 4.2, duration: 0.6 }}
+                    className="flex justify-center"
+                  >
+                    <motion.a
+                      href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu?subject=Signal%20Inquiry%20%E2%80%93%20Weekly%20Builder%20Dinners"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="inline-flex items-center space-x-3 px-6 py-3 bg-card-bg border border-card-border rounded-xl hover:border-accent/50 hover:bg-card-bg/80 transition-all duration-300 text-foreground/80 hover:text-foreground font-mono text-sm group shadow-lg hover:shadow-accent/10"
+                    >
+                      <svg className="w-5 h-5 text-accent group-hover:text-accent-hover transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                      <span>contact</span>
+                      <motion.span 
+                        className="text-accent group-hover:text-accent-hover transition-colors"
+                        animate={{ x: [0, 3, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        →
+                      </motion.span>
+                    </motion.a>
+                  </motion.div>
+
+                  {/* Subtle divider */}
+                  <div className="flex items-center justify-center">
+                    <div className="w-12 h-px bg-card-border"></div>
                   </div>
+                  
+                  {/* Footer text */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 4.8, duration: 0.6 }}
+                    className="text-xs text-foreground/40 font-mono"
+                  >
+                    built with ❤️ by builders, for builders
+                  </motion.div>
                 </motion.div>
               </div>
             </footer>
