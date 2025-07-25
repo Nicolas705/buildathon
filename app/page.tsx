@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 
 // Terminal loading sequence data
 const bootSequence = [
-  { text: "$ initializing signal...", delay: 250 },
-  { text: "✓ connecting to yale network", delay: 650 },
-  { text: "✓ establishing secure connection", delay: 750 },
-  { text: "$ signal ready", delay: 850 }
+  { text: "$ initializing signal...", delay: 350 },
+  { text: "✓ connecting to yale network", delay: 750 },
+  { text: "✓ establishing secure connection", delay: 850 },
+  { text: "$ signal ready", delay: 950 }
 ];
 
 // Enhanced animation variants for the hero section
