@@ -15,6 +15,11 @@ const SplineBackground = dynamic(() => import('./components/SplineBackground'), 
   ssr: false,
 });
 
+// Dynamically import ShareModal
+const ShareModal = dynamic(() => import('./components/ShareModal'), {
+  ssr: false,
+});
+
 // Terminal loading sequence data
 const bootSequence = [
   { text: "$ initializing signal...", delay: 350 },
@@ -522,6 +527,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   useEffect(() => {
     // Preload Spline scenes for optimal performance
@@ -576,6 +582,66 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" as const }}
             className="w-full relative z-10 min-h-screen flex flex-col"
           >
+            {/* Share Button - Top Right */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 2, duration: 0.6 }}
+              className="fixed top-6 right-6 z-20"
+            >
+              <motion.button
+                onClick={() => setIsShareModalOpen(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative"
+              >
+                {/* Glow effect */}
+                <motion.div
+                  className="absolute inset-0 bg-accent/20 rounded-lg blur-xl"
+                  animate={{
+                    opacity: [0.5, 0.8, 0.5],
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Button content */}
+                <div className="relative bg-background/90 backdrop-blur-sm border border-accent/50 rounded-lg px-4 py-2 flex items-center space-x-2 hover:border-accent hover:bg-accent/10 transition-all duration-200">
+                  <div className="flex items-center space-x-2">
+                    {/* Animated dots */}
+                    <div className="flex space-x-1">
+                      <motion.div
+                        className="w-1.5 h-1.5 bg-accent rounded-full"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
+                      />
+                      <motion.div
+                        className="w-1.5 h-1.5 bg-accent rounded-full"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
+                      />
+                      <motion.div
+                        className="w-1.5 h-1.5 bg-accent rounded-full"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
+                      />
+                    </div>
+                    
+                    <span className="font-mono text-sm text-accent">share</span>
+                    
+                    {/* Share icon */}
+                    <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.632 4.316C18.114 15.062 18 14.518 18 14c0-.482.114-.938.316-1.342m0 2.684a3 3 0 110-2.684m0-2.684a3 3 0 110 2.684M3 12h18" />
+                    </svg>
+                  </div>
+                </div>
+              </motion.button>
+            </motion.div>
+
             {/* Hero Section */}
             <section className="relative px-6 py-8 sm:px-8 lg:px-12 w-full flex-1 flex items-start justify-center pt-16">
               <div className="max-w-4xl mx-auto">
@@ -675,7 +741,7 @@ export default function Home() {
                   transition={{ delay: 4, duration: 0.6 }}
                   className="text-center space-y-8"
                 >
-                  {/* Contact Button - Prominently displayed */}
+                  {/* Contact Button */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -714,7 +780,7 @@ export default function Home() {
                     transition={{ delay: 4.8, duration: 0.6 }}
                     className="text-xs text-foreground/80 font-mono"
                   >
-                     high-signal minds designing the next decade.
+                     builders designing the next decade
                   </motion.div>
                 </motion.div>
               </div>
@@ -727,6 +793,12 @@ export default function Home() {
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={() => setIsContactModalOpen(false)} 
+      />
+      
+      {/* Share Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
       />
     </div>
   );

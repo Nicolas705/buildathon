@@ -4,19 +4,19 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Signal — 10 builders. weekly vc dinners.",
-  description: "every thursday. 10 builders. top-tier vcs and operators. no bs networking. just real conversations about building the future.",
+  description: "every thursday. 10 builders. top-tier vcs and operators. high-signal conversations about building the future.",
   keywords: "Yale, builders, entrepreneurs, VCs, venture capital, startup, founders, signal, developers, innovation, weekly dinners",
   authors: [{ name: "signal" }],
   creator: "signal",
   publisher: "signal",
-  metadataBase: new URL('https://signal-yale.vercel.app'),
+  metadataBase: new URL('https://signal.mylon.ai'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     title: "Signal — 10 builders. weekly vc dinners.",
-    description: "every thursday. 10 builders. top-tier vcs and operators. no bs networking.",
-    url: 'https://signal-yale.vercel.app',
+    description: "every thursday. 10 builders. top-tier vcs and operators. high-signal conversations.",
+    url: 'https://signal.mylon.ai',
     siteName: 'signal',
     locale: 'en_US',
     type: 'website',
