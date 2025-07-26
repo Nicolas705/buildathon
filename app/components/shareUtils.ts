@@ -86,11 +86,14 @@ export const shareViaMethod = async (method: string): Promise<boolean> => {
 
 // Analytics tracking (optional)
 export const trackShare = (method: string) => {
-  if (typeof window !== 'undefined' && (window as any).gtag) {
-    (window as any).gtag('event', 'share', {
-      event_category: 'engagement',
-      event_label: method,
-      value: 1
-    });
+  if (typeof window !== 'undefined' && 'gtag' in window) {
+    const gtag = (window as { gtag?: (...args: unknown[]) => void }).gtag;
+    if (gtag) {
+      gtag('event', 'share', {
+        event_category: 'engagement',
+        event_label: method,
+        value: 1
+      });
+    }
   }
 }; 
