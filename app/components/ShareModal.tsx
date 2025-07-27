@@ -179,19 +179,19 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="bg-card-bg border border-card-border rounded-2xl max-w-2xl w-full max-h-[90vh] my-8 overflow-hidden flex flex-col"
+          className="bg-card-bg border border-card-border rounded-2xl max-w-md sm:max-w-lg w-full max-h-[90vh] my-4 sm:my-8 overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="p-6 border-b border-card-border">
+          <div className="p-4 sm:p-6 border-b border-card-border">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
                   <Share2 className="w-4 h-4 text-background" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-foreground font-mono">share signal</h2>
-                  <p className="text-xs text-foreground/60 font-mono">
+                  <h2 className="text-base sm:text-lg font-semibold text-foreground font-mono">share signal</h2>
+                  <p className="text-xs text-foreground/60 font-mono hidden sm:block">
                     spread the word about high-signal builder dinners
                   </p>
                 </div>
@@ -200,15 +200,15 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                 onClick={onClose}
                 className="text-foreground/50 hover:text-foreground transition-colors"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>
 
           {/* Content */}
-          <div className="p-6 overflow-y-auto flex-1">
+          <div className="p-4 sm:p-6 overflow-y-auto flex-1">
             {/* Terminal Output */}
-            <div className="bg-background border border-card-border rounded-lg p-4 mb-6 font-mono text-sm">
+            <div className="bg-background border border-card-border rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 font-mono text-xs sm:text-sm">
               <div className="flex items-center space-x-2 mb-3">
                 <Terminal className="w-4 h-4 text-accent" />
                 <span className="text-foreground/50">signal@yale:~</span>
@@ -281,7 +281,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: terminalProgress >= 3 ? 1 : 0 }}
               transition={{ delay: 0.2 }}
-              className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4 sm:mb-6"
             >
               {shareMethods.map((method, index) => (
                 <motion.button
@@ -292,7 +292,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                   onClick={() => handleShare(method.id)}
                   disabled={isSharing || !method.available}
                   className={`
-                    p-4 bg-background border rounded-lg font-mono text-sm
+                    p-3 sm:p-4 bg-background border rounded-lg font-mono text-xs sm:text-sm
                     transition-all duration-200 group relative
                     ${selectedMethod === method.id 
                       ? 'border-accent bg-accent/10' 
@@ -322,11 +322,11 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
             </motion.div>
 
             {/* Additional Options */}
-            <div className="flex items-center justify-between pt-4 border-t border-card-border">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-3 sm:pt-4 border-t border-card-border space-y-2 sm:space-y-0">
               <div className="flex items-center space-x-3">
                 <button
                   onClick={() => setShowQR(!showQR)}
-                  className="flex items-center space-x-2 px-3 py-1.5 text-foreground/50 hover:text-foreground font-mono text-sm transition-colors"
+                  className="flex items-center space-x-2 px-2 sm:px-3 py-1.5 text-foreground/50 hover:text-foreground font-mono text-xs sm:text-sm transition-colors"
                 >
                   <QrCode className="w-4 h-4" />
                   <span>QR code</span>
@@ -335,7 +335,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                 {showNativeShare && (
                   <button
                     onClick={handleNativeShare}
-                    className="flex items-center space-x-2 px-3 py-1.5 text-foreground/50 hover:text-foreground font-mono text-sm transition-colors"
+                    className="flex items-center space-x-2 px-2 sm:px-3 py-1.5 text-foreground/50 hover:text-foreground font-mono text-xs sm:text-sm transition-colors"
                   >
                     <Share2 className="w-4 h-4" />
                     <span>more options</span>
@@ -343,7 +343,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                 )}
               </div>
               
-              <div className="text-xs text-foreground/30 font-mono">
+              <div className="text-xs text-foreground/30 font-mono hidden sm:block">
                 press [1-6] or ESC
               </div>
             </div>

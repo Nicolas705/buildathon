@@ -597,7 +597,7 @@ export default function Home() {
               >
                 {/* Glow effect */}
                 <motion.div
-                  className="absolute inset-0 bg-accent/20 rounded-lg blur-xl"
+                  className="absolute inset-0 bg-accent/20 rounded-full blur-xl"
                   animate={{
                     opacity: [0.5, 0.8, 0.5],
                     scale: [1, 1.1, 1],
@@ -609,34 +609,25 @@ export default function Home() {
                   }}
                 />
                 
-                {/* Button content */}
-                <div className="relative bg-background/90 backdrop-blur-sm border border-accent/50 rounded-lg px-4 py-2 flex items-center space-x-2 hover:border-accent hover:bg-accent/10 transition-all duration-200">
-                  <div className="flex items-center space-x-2">
-                    {/* Animated dots */}
-                    <div className="flex space-x-1">
-                      <motion.div
-                        className="w-1.5 h-1.5 bg-accent rounded-full"
-                        animate={{ opacity: [0.3, 1, 0.3] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
-                      />
-                      <motion.div
-                        className="w-1.5 h-1.5 bg-accent rounded-full"
-                        animate={{ opacity: [0.3, 1, 0.3] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-                      />
-                      <motion.div
-                        className="w-1.5 h-1.5 bg-accent rounded-full"
-                        animate={{ opacity: [0.3, 1, 0.3] }}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
-                      />
-                    </div>
-                    
-                    <span className="font-mono text-sm text-accent">share</span>
-                    
-                    {/* Share icon */}
-                    <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m9.632 4.316C18.114 15.062 18 14.518 18 14c0-.482.114-.938.316-1.342m0 2.684a3 3 0 110-2.684m0-2.684a3 3 0 110 2.684M3 12h18" />
-                    </svg>
+                {/* Button content - Just the 3 dots */}
+                <div className="relative bg-background/90 backdrop-blur-sm border border-accent/50 rounded-full w-12 h-12 flex items-center justify-center hover:border-accent hover:bg-accent/10 transition-all duration-200">
+                  {/* Animated dots */}
+                  <div className="flex space-x-1">
+                    <motion.div
+                      className="w-1.5 h-1.5 bg-accent rounded-full"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
+                    />
+                    <motion.div
+                      className="w-1.5 h-1.5 bg-accent rounded-full"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
+                    />
+                    <motion.div
+                      className="w-1.5 h-1.5 bg-accent rounded-full"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
+                    />
                   </div>
                 </div>
               </motion.button>
