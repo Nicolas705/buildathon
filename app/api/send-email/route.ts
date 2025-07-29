@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Resend } from 'resend';
+
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // In-memory rate limiting and spam prevention
 const requestLog = new Map<string, { count: number; lastRequest: number; submissions: Set<string> }>();
@@ -15,12 +19,12 @@ interface FormSubmission {
   accomplishments: string;
 }
 
-// Environment variable helpers with fallbacks
-function getEmailJSConfig() {
+// Environment variable helpers
+function getEmailConfig() {
   return {
-    serviceId: process.env.EMAILJS_SERVICE_ID || process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '',
-    templateId: process.env.EMAILJS_TEMPLATE_ID || process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
-    publicKey: process.env.EMAILJS_PUBLIC_KEY || process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
+    apiKey: process.env.RESEND_API_KEY || '',
+    fromEmail: process.env.RESEND_FROM_EMAIL || 'Signal <noreply@signal.community>',
+    toEmail: process.env.RESEND_TO_EMAIL || 'nicolas.gertler@yale.edu'
   };
 }
 
@@ -215,8 +219,8 @@ export async function POST(request: NextRequest) {
       }, { status: 409 });
     }
 
-    // Get EmailJS configuration
-    const emailConfig = getEmailJSConfig();
+    // Get email configuration
+    const emailConfig = getEmailConfig();
     
     // Log application regardless of email service status
     const applicationData = {
@@ -231,56 +235,64 @@ export async function POST(request: NextRequest) {
 
     console.log(`📝 Signal Application Received:`, applicationData);
 
-    // Email content with security info
-    const emailContent = `New Signal Application:
+    // Create email HTML content
+    const emailHtml = `
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f8f9fa;">
+        <div style="background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          <h1 style="color: #00ff88; font-size: 24px; margin-bottom: 20px; border-bottom: 2px solid #00ff88; padding-bottom: 10px;">
+            🚀 New Signal Application
+          </h1>
+          
+          <div style="margin-bottom: 25px;">
+            <h2 style="color: #333; font-size: 18px; margin-bottom: 15px;">Applicant Information</h2>
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+              <p style="margin: 5px 0;"><strong>Name:</strong> ${name.trim()}</p>
+              <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:${email.trim()}" style="color: #00ff88;">${email.trim()}</a></p>
+              <p style="margin: 5px 0;"><strong>LinkedIn:</strong> ${linkedin ? `<a href="${linkedin}" style="color: #00ff88;" target="_blank">${linkedin}</a>` : 'Not provided'}</p>
+              <p style="margin: 5px 0;"><strong>GitHub:</strong> <a href="${github}" style="color: #00ff88;" target="_blank">${github}</a></p>
+            </div>
+          </div>
 
-Name: ${name.trim()}
-Email: ${email.trim()}
-LinkedIn: ${linkedin || 'Not provided'}
-GitHub: ${github}
+          <div style="margin-bottom: 25px;">
+            <h2 style="color: #333; font-size: 18px; margin-bottom: 15px;">Accomplishments</h2>
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; line-height: 1.6;">
+              ${accomplishments.trim().replace(/\n/g, '<br>')}
+            </div>
+          </div>
 
-Accomplishments:
-${accomplishments.trim()}
+          <div style="border-top: 1px solid #e9ecef; padding-top: 20px; margin-top: 20px;">
+            <h3 style="color: #666; font-size: 14px; margin-bottom: 10px;">Security Information</h3>
+            <div style="font-size: 12px; color: #888; line-height: 1.5;">
+              <p style="margin: 3px 0;">• Submitted from IP: ${clientId.split('-')[0]}</p>
+              <p style="margin: 3px 0;">• Timestamp: ${new Date().toISOString()}</p>
+              <p style="margin: 3px 0;">• Validation: ✅ Passed</p>
+              <p style="margin: 3px 0;">• Spam Check: ✅ Passed</p>
+              <p style="margin: 3px 0;">• Source: Signal application form</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
 
----
-Security Info:
-- Submitted from IP: ${clientId.split('-')[0]}
-- Timestamp: ${new Date().toISOString()}
-- Validated: ✅
-- Spam Check: Passed
-
-Submitted via Signal application form`;
-
-    // Only attempt to send email if we have valid configuration
-    if (emailConfig.serviceId && emailConfig.publicKey) {
+    // Send email using Resend
+    if (emailConfig.apiKey) {
       try {
-        const emailjsResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            service_id: emailConfig.serviceId,
-            template_id: emailConfig.templateId || 'default_template',
-            user_id: emailConfig.publicKey,
-            template_params: {
-              from_name: name.trim(),
-              from_email: email.trim(),
-              to_email: 'nicolas.gertler@yale.edu',
-              subject: `Signal Application from ${name.trim()}`,
-              message: emailContent,
-            },
-          }),
+        const emailResult = await resend.emails.send({
+          from: emailConfig.fromEmail,
+          to: [emailConfig.toEmail],
+          subject: `Signal Application from ${name.trim()}`,
+          html: emailHtml,
+          replyTo: email.trim(),
         });
 
-        if (emailjsResponse.ok) {
-          console.log(`✅ Email sent successfully for application: ${email}`);
+        if (emailResult.data) {
+          console.log(`✅ Email sent successfully via Resend for application: ${email}`, emailResult.data);
           return NextResponse.json({ 
             success: true, 
             message: 'Application submitted successfully' 
           });
         } else {
-          console.error(`❌ EmailJS failed for ${email}:`, await emailjsResponse.text());
+          console.error(`❌ Resend failed for ${email}:`, emailResult.error);
         }
       } catch (emailError) {
         console.error(`❌ Email service error for ${email}:`, emailError);
