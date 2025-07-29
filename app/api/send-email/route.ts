@@ -15,6 +15,15 @@ interface FormSubmission {
   accomplishments: string;
 }
 
+// Environment variable helpers with fallbacks
+function getEmailJSConfig() {
+  return {
+    serviceId: process.env.EMAILJS_SERVICE_ID || process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '',
+    templateId: process.env.EMAILJS_TEMPLATE_ID || process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
+    publicKey: process.env.EMAILJS_PUBLIC_KEY || process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ''
+  };
+}
+
 // Advanced validation functions
 function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -203,8 +212,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ 
         error: 'Duplicate submission detected',
         message: 'An application from this email address has already been submitted.' 
-      }, { status:409 });
+      }, { status: 409 });
     }
+
+    // Get EmailJS configuration
+    const emailConfig = getEmailJSConfig();
+    
+    // Log application regardless of email service status
+    const applicationData = {
+      name: name.trim(),
+      email: email.trim(),
+      linkedin,
+      github,
+      accomplishments: accomplishments.trim(),
+      timestamp: new Date().toISOString(),
+      clientId: clientId.split('-')[0] // Just IP for logging
+    };
+
+    console.log(`📝 Signal Application Received:`, applicationData);
 
     // Email content with security info
     const emailContent = `New Signal Application:
@@ -219,79 +244,56 @@ ${accomplishments.trim()}
 
 ---
 Security Info:
-- Submitted from IP: ${getClientId(request).split('-')[0]}
+- Submitted from IP: ${clientId.split('-')[0]}
 - Timestamp: ${new Date().toISOString()}
 - Validated: ✅
 - Spam Check: Passed
 
 Submitted via Signal application form`;
 
-    // Send email via EmailJS API
-    try {
-      const emailjsResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          service_id: process.env.EMAILJS_SERVICE_ID || 'service_default',
-          template_id: process.env.EMAILJS_TEMPLATE_ID || 'template_default',
-          user_id: process.env.EMAILJS_PUBLIC_KEY || 'default_key',
-          template_params: {
-            from_name: name.trim(),
-            from_email: email.trim(),
-            to_email: 'nicolas.gertler@yale.edu',
-            subject: `Signal Application from ${name.trim()}`,
-            message: emailContent,
+    // Only attempt to send email if we have valid configuration
+    if (emailConfig.serviceId && emailConfig.publicKey) {
+      try {
+        const emailjsResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        }),
-      });
+          body: JSON.stringify({
+            service_id: emailConfig.serviceId,
+            template_id: emailConfig.templateId || 'default_template',
+            user_id: emailConfig.publicKey,
+            template_params: {
+              from_name: name.trim(),
+              from_email: email.trim(),
+              to_email: 'nicolas.gertler@yale.edu',
+              subject: `Signal Application from ${name.trim()}`,
+              message: emailContent,
+            },
+          }),
+        });
 
-      if (emailjsResponse.ok) {
-        // Log successful submission (for monitoring)
-        console.log(`✅ Signal application submitted successfully: ${email} at ${new Date().toISOString()}`);
-        
-        return NextResponse.json({ 
-          success: true, 
-          message: 'Application submitted successfully' 
-        });
-      } else {
-        // Log failed email but don't expose internal errors
-        console.error(`❌ EmailJS failed for ${email}:`, await emailjsResponse.text());
-        
-        // Still log the application for manual review
-        console.log(`📝 Application logged for manual review:`, {
-          name: name.trim(),
-          email: email.trim(),
-          linkedin,
-          github,
-          accomplishments: accomplishments.substring(0, 100) + '...',
-          timestamp: new Date().toISOString(),
-        });
-        
-        return NextResponse.json({ 
-          success: true, 
-          message: 'Application received and logged for review',
-          fallback: true 
-        });
+        if (emailjsResponse.ok) {
+          console.log(`✅ Email sent successfully for application: ${email}`);
+          return NextResponse.json({ 
+            success: true, 
+            message: 'Application submitted successfully' 
+          });
+        } else {
+          console.error(`❌ EmailJS failed for ${email}:`, await emailjsResponse.text());
+        }
+      } catch (emailError) {
+        console.error(`❌ Email service error for ${email}:`, emailError);
       }
-    } catch (emailError) {
-      console.error(`❌ Email service error for ${email}:`, emailError);
-      
-      // Log application for manual processing
-      console.log(`📝 Application logged for manual processing:`, {
-        name: name.trim(),
-        email: email.trim(),
-        linkedin,
-        github,
-        timestamp: new Date().toISOString(),
-      });
-      
-      return NextResponse.json({ 
-        success: true, 
-        message: 'Application received and will be processed manually'
-      });
+    } else {
+      console.warn(`⚠️ Email service not configured - application logged only`);
     }
+
+    // Always return success to user (application is logged regardless)
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Application received and logged for review'
+    });
 
   } catch (error) {
     console.error('❌ Unexpected error in application submission:', error);
