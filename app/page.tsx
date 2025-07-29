@@ -676,10 +676,10 @@ export default function Home() {
                     </span>
                   </motion.div>
 
-                  {/* Apply button with much more spacing */}
+                  {/* Apply button with responsive spacing */}
                   <motion.div
                     variants={itemVariants}
-                    className="pt-64"
+                    className="pt-16 sm:pt-32 lg:pt-48 xl:pt-64"
                   >
                     <motion.button
                       onClick={() => setIsContactModalOpen(true)}
