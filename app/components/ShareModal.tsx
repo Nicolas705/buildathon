@@ -136,7 +136,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
         await navigator.share({
           title: 'Signal - 10 builders. weekly vc dinners.',
           text: shareMessages.sms,
-          url: 'https://signal.mylon.ai'
+          url: 'https://signal.community'
         });
         setShowSuccess(true);
         setTimeout(onClose, 1500);
@@ -262,12 +262,12 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                     <div className="flex items-center space-x-2">
                       <span className="text-foreground/50">→</span>
                       <a 
-                        href="https://signal.mylon.ai"
+                        href="https://signal.community"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-accent hover:text-accent-hover underline text-sm"
                       >
-                        https://signal.mylon.ai
+                        https://signal.community
                       </a>
                       <span className="text-foreground/50 text-xs">(copied)</span>
                     </div>
@@ -357,7 +357,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                   exit={{ opacity: 0, height: 0 }}
                   className="mt-4 overflow-hidden"
                 >
-                  <QRCodeDisplay url="https://signal.mylon.ai" />
+                  <QRCodeDisplay url="https://signal.community" />
                 </motion.div>
               )}
             </AnimatePresence>

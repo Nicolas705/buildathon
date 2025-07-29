@@ -37,7 +37,7 @@ export default function QRCodeDisplay({ url }: QRCodeDisplayProps) {
                 ctx.fillStyle = '#00ff88';
                 ctx.font = 'bold 12px JetBrains Mono';
                 ctx.textAlign = 'center';
-                ctx.fillText('signal.mylon.ai', canvas.width / 2, canvas.height - 10);
+                ctx.fillText('signal.community', canvas.width / 2, canvas.height - 10);
               }
             }
           }

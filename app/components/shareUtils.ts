@@ -1,5 +1,5 @@
 export const shareMessages = {
-  sms: "Signal at Yale - 10 builders meet weekly with top VCs and operators. High-signal conversations, no BS: signal.mylon.ai",
+  sms: "Signal at Yale - 10 builders meet weekly with top VCs and operators. High-signal conversations, no BS: signal.community",
   email: {
     subject: "Signal at Yale - where builders meet capital",
     body: `Hey,
@@ -8,13 +8,13 @@ Thought you'd be interested in Signal - 10 high-agency builders at Yale meeting 
 
 Every Thursday, we bring together people who are actually building things with investors who understand what it takes.
 
-Check it out: signal.mylon.ai
+Check it out: signal.community
 
 Best,`
   },
-  twitter: "Signal at Yale - 10 builders, weekly dinners with top VCs and operators. High-signal conversations for high-agency people 🚀 signal.mylon.ai",
-  whatsapp: "Check out Signal at Yale - 10 builders get weekly dinners with top VCs and operators. High-signal conversations about building the future: signal.mylon.ai",
-  linkedin: "Signal at Yale brings together 10 high-agency builders with leading VCs and operators every week. Real conversations, real connections, real impact. Learn more: signal.mylon.ai"
+  twitter: "Signal at Yale - 10 builders, weekly dinners with top VCs and operators. High-signal conversations for high-agency people 🚀 signal.community",
+  whatsapp: "Check out Signal at Yale - 10 builders get weekly dinners with top VCs and operators. High-signal conversations about building the future: signal.community",
+  linkedin: "Signal at Yale brings together 10 high-agency builders with leading VCs and operators every week. Real conversations, real connections, real impact. Learn more: signal.community"
 };
 
 export const canUseNativeShare = (): boolean => {
@@ -47,7 +47,7 @@ export const copyToClipboard = async (text: string): Promise<boolean> => {
 };
 
 export const shareViaMethod = async (method: string): Promise<boolean> => {
-  const url = 'https://signal.mylon.ai';
+  const url = 'https://signal.community';
   
   try {
     switch (method) {

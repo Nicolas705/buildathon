@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { Share2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import SplineIntro with preload hint
@@ -609,26 +610,9 @@ export default function Home() {
                   }}
                 />
                 
-                {/* Button content - Just the 3 dots */}
+                {/* Button content - Share icon */}
                 <div className="relative bg-background/90 backdrop-blur-sm border border-accent/50 rounded-full w-12 h-12 flex items-center justify-center hover:border-accent hover:bg-accent/10 transition-all duration-200">
-                  {/* Animated dots */}
-                  <div className="flex space-x-1">
-                    <motion.div
-                      className="w-1.5 h-1.5 bg-accent rounded-full"
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
-                    />
-                    <motion.div
-                      className="w-1.5 h-1.5 bg-accent rounded-full"
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-                    />
-                    <motion.div
-                      className="w-1.5 h-1.5 bg-accent rounded-full"
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
-                    />
-                  </div>
+                  <Share2 className="w-6 h-6 text-accent" />
                 </div>
               </motion.button>
             </motion.div>
