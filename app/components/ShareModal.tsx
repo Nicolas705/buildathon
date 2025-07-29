@@ -192,7 +192,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-foreground font-mono">share signal</h2>
                   <p className="text-xs text-foreground/60 font-mono hidden sm:block">
-                    spread the word about high-signal builder dinners
+                                          spread the word about meaningful builder dinners
                   </p>
                 </div>
               </div>

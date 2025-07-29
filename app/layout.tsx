@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Signal — 10 builders. weekly vc dinners.",
-  description: "every thursday. 10 builders. top-tier vcs and operators. high-signal conversations about building the future.",
+  description: "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
   keywords: "Yale, builders, entrepreneurs, VCs, venture capital, startup, founders, signal, developers, innovation, weekly dinners, builder community, yale entrepreneurs, startup network, New Haven, Connecticut",
   authors: [{ name: "Signal Community", url: 'https://signal.community' }],
   creator: "Signal Community",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Signal — 10 builders. weekly vc dinners.",
-    description: "every thursday. 10 builders. top-tier vcs and operators. high-signal conversations about building the future.",
+    description: "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
     url: 'https://signal.community',
     siteName: 'Signal Community',
     locale: 'en_US',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     site: '@signalcommunity',
     creator: '@signalcommunity',
     title: "Signal — 10 builders. weekly vc dinners.",
-    description: "every thursday. 10 builders. top-tier vcs and operators. high-signal conversations about building the future.",
+    description: "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
     images: ['/og-image.svg'],
   },
   robots: {
@@ -77,7 +77,7 @@ const jsonLd = {
   alternateName: 'Signal',
   url: 'https://signal.community',
   logo: 'https://signal.community/og-image.svg',
-  description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators for high-signal conversations about building the future.',
+  description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators for meaningful conversations about building the future.',
   foundingLocation: {
     '@type': 'Place',
     name: 'New Haven, CT',
