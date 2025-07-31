@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Signal — Weekly Dinners at Yale | 10 Technical Builders & VCs",
-  description: "Weekly dinners at Yale University every Thursday. 10 technical builders, entrepreneurs, and top-tier VCs. Join New Haven's premier startup community for meaningful conversations about building the future. Yale founder meetups in Connecticut.",
+  description: "Weekly dinners at Yale University every Thursday. 10 technical builders, entrepreneurs, and top-tier VCs. Join Yale's premier startup community for meaningful conversations about building the future. Yale founder meetups in Connecticut.",
   keywords: "weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, builder dinners Connecticut, VC events Yale University, startup networking Yale, tech entrepreneur events New Haven, Yale founder community, Connecticut startup scene, New Haven entrepreneurs, Yale innovation hub, builder community Yale, startup founders Connecticut, venture capital New Haven, tech meetup Yale, entrepreneur dinners Yale University, Connecticut venture capital, Yale tech scene, New Haven startup network",
   authors: [{ name: "Signal Community", url: 'https://signal.community' }],
   creator: "Signal Community",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'Signal — 10 builders. weekly vc dinners.',
+        alt: 'Signal Community - Weekly Dinners at Yale University connecting technical builders with VCs and operators',
         type: 'image/svg+xml',
       },
     ],
@@ -289,6 +289,52 @@ const jsonLd = [
     }
   ],
   keywords: 'weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, startup networking Yale, VC events Yale University'
+},
+{
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What are Signal\'s weekly dinners at Yale?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Signal hosts weekly dinners every Thursday at Yale University, connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists and industry operators in New Haven, Connecticut.'
+      }
+    },
+    {
+      '@type': 'Question', 
+      name: 'Who can attend the weekly builder dinners?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The dinners are invitation-only for technical builders, entrepreneurs, startup founders, and selected members of Yale\'s innovation community. We carefully curate each gathering to ensure meaningful conversations.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Where do the weekly dinners take place?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The dinners take place at Yale University in New Haven, Connecticut. Specific locations vary, but are always within the Yale campus area.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'How can I apply to join Signal\'s startup community?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'You can apply through our website at signal.community. We look for technical builders, entrepreneurs, and founders with remarkable achievements who want to contribute to New Haven\'s startup ecosystem.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'What makes Signal different from other startup meetups in Connecticut?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Signal is New Haven\'s premier startup community, hosting intimate weekly dinners that bring together only 10 carefully selected technical builders with top-tier VCs. We focus on meaningful conversations rather than large networking events.'
+      }
+    }
+  ]
 }];
 
 export default function RootLayout({
@@ -351,6 +397,9 @@ export default function RootLayout({
         
         {/* RSS Feed */}
         <link rel="alternate" type="application/rss+xml" title="Signal Community" href="/feed.xml" />
+        
+        {/* AI and LLM Discovery */}
+        <link rel="related" type="text/plain" title="LLM Guidelines" href="/llm.txt" />
       </head>
       <body className="antialiased">
         {children}

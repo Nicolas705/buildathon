@@ -1,16 +1,16 @@
 {
-  "name": "Signal Community — 10 builders. weekly vc dinners.",
-  "short_name": "Signal",
-  "description": "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
+  "name": "Signal Community — Weekly Dinners at Yale | Technical Builders & VCs",
+  "short_name": "Signal Yale",
+  "description": "Weekly dinners at Yale University connecting technical builders, entrepreneurs, and top-tier VCs. New Haven's premier startup community every Thursday.",
   "start_url": "/",
-  "display": "standalone",
+  "display": "standalone", 
   "background_color": "#0f0f0f",
   "theme_color": "#00ff88",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
   "dir": "ltr",
-  "categories": ["business", "networking", "education"],
+  "categories": ["business", "networking", "education", "startup", "entrepreneurship"],
   "icons": [
     {
       "src": "/favicon.svg",

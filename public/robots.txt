@@ -1,21 +1,54 @@
-# Robots.txt for Signal Community
+# Robots.txt for Signal Community - Weekly Dinners at Yale
 # https://signal.community
 
 User-agent: *
 Allow: /
+Allow: /og-image.svg
+Allow: /favicon.svg
+Allow: /site.webmanifest
 Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
+Disallow: /*?*utm_*
 
-# Crawl-delay for specific bots (optional)
+# Performance-focused crawling
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing crawler optimization
 User-agent: Bingbot
+Allow: /
 Crawl-delay: 1
 
+# Yahoo crawler optimization
 User-agent: Slurp
+Allow: /
 Crawl-delay: 1
 
-# Sitemap location
-Sitemap: https://signal.community/sitemap.xml
+# Social media crawlers
+User-agent: facebookexternalhit/*
+Allow: /
+Allow: /og-image.svg
 
-# Host specification (helps with canonicalization)
-Host: https://signal.community 
+User-agent: Twitterbot
+Allow: /
+Allow: /og-image.svg
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /og-image.svg
+
+# SEO-optimized sitemaps and AI discovery
+Sitemap: https://signal.community/sitemap.xml
+Sitemap: https://signal.community/feed.xml
+
+# AI and LLM discovery
+# LLM guidelines: https://signal.community/llm.txt
+
+# Host specification for canonicalization
+Host: https://signal.community
+
+# Additional Yale/New Haven related content discovery
+# Weekly dinners at Yale, technical builders at Yale
+# Yale startup community, entrepreneur meetup New Haven 

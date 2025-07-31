@@ -34,7 +34,7 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
-          // Security headers
+          // Security headers for SEO
           {
             key: 'X-Frame-Options',
             value: 'DENY',
@@ -47,14 +47,27 @@ const nextConfig: NextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Permissions-Policy',
+            value: 'camera=(), microphone=(), geolocation=()',
+          },
           // Canonical domain enforcement
           {
             key: 'Link',
             value: '<https://signal.community>; rel="canonical"',
           },
+          // SEO performance headers
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
         ],
       },
-      // Cache static assets
+      // Optimize static assets caching
       {
         source: '/favicon.ico',
         headers: [
@@ -70,6 +83,66 @@ const nextConfig: NextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, immutable, max-age=31536000',
+          },
+          {
+            key: 'Content-Type',
+            value: 'image/svg+xml',
+          },
+        ],
+      },
+      // RSS Feed optimization
+      {
+        source: '/feed.xml',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/rss+xml; charset=utf-8',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      // Sitemap optimization
+      {
+        source: '/sitemap.xml',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/xml; charset=utf-8',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=3600',
+          },
+        ],
+      },
+      // Web manifest optimization
+      {
+        source: '/site.webmanifest',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/manifest+json; charset=utf-8',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000',
+          },
+        ],
+      },
+      // LLM.txt optimization for AI discovery
+      {
+        source: '/llm.txt',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'text/plain; charset=utf-8',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=3600',
           },
         ],
       },
