@@ -25,6 +25,17 @@ const nextConfig: NextConfig = {
         destination: '/:path*',
         permanent: true,
       },
+      // Additional canonical enforcement for any edge cases
+      {
+        source: '/index',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/home',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
   
@@ -55,10 +66,14 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
-          // Canonical domain enforcement
+          // Canonical domain enforcement - Multiple approaches
           {
             key: 'Link',
             value: '<https://signal.community>; rel="canonical"',
+          },
+          {
+            key: 'X-Canonical-URL',
+            value: 'https://signal.community',
           },
           // SEO performance headers
           {

@@ -400,6 +400,9 @@ export default function RootLayout({
         
         {/* AI and LLM Discovery */}
         <link rel="related" type="text/plain" title="LLM Guidelines" href="/llm.txt" />
+        
+        {/* Explicit Canonical URL - Critical for Google indexing */}
+        <link rel="canonical" href="https://signal.community" />
       </head>
       <body className="antialiased">
         {children}
