@@ -4,9 +4,9 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Signal — 10 builders. weekly vc dinners.",
-  description: "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
-  keywords: "Yale, builders, entrepreneurs, VCs, venture capital, startup, founders, signal, developers, innovation, weekly dinners, builder community, yale entrepreneurs, startup network, New Haven, Connecticut",
+  title: "Signal — Weekly Dinners at Yale | 10 Technical Builders & VCs",
+  description: "Weekly dinners at Yale University every Thursday. 10 technical builders, entrepreneurs, and top-tier VCs. Join New Haven's premier startup community for meaningful conversations about building the future. Yale founder meetups in Connecticut.",
+  keywords: "weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, builder dinners Connecticut, VC events Yale University, startup networking Yale, tech entrepreneur events New Haven, Yale founder community, Connecticut startup scene, New Haven entrepreneurs, Yale innovation hub, builder community Yale, startup founders Connecticut, venture capital New Haven, tech meetup Yale, entrepreneur dinners Yale University, Connecticut venture capital, Yale tech scene, New Haven startup network",
   authors: [{ name: "Signal Community", url: 'https://signal.community' }],
   creator: "Signal Community",
   publisher: "Signal Community",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
     canonical: 'https://signal.community',
   },
   openGraph: {
-    title: "Signal — 10 builders. weekly vc dinners.",
-    description: "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
+    title: "Signal — Weekly Dinners at Yale | Technical Builders & VCs",
+    description: "Weekly dinners at Yale University connecting 10 technical builders with top-tier VCs and operators. Join New Haven's premier startup community every Thursday for meaningful conversations about building the future.",
     url: 'https://signal.community',
     siteName: 'Signal Community',
     locale: 'en_US',
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@signalcommunity',
     creator: '@signalcommunity',
-    title: "Signal — 10 builders. weekly vc dinners.",
-    description: "every thursday. 10 builders. top-tier vcs and operators. meaningful conversations about building the future.",
+    title: "Signal — Weekly Dinners at Yale | Technical Builders & VCs",
+    description: "Weekly dinners at Yale University connecting technical builders with VCs. Join New Haven's premier startup community every Thursday for meaningful conversations.",
     images: ['/og-image.svg'],
   },
   robots: {
@@ -67,6 +67,19 @@ export const metadata: Metadata = {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
+    // Local SEO metadata
+    'geo.region': 'US-CT',
+    'geo.placename': 'New Haven, Connecticut',
+    'geo.position': '41.3083;-72.9279',
+    'ICBM': '41.3083, -72.9279',
+    'DC.title': 'Weekly Dinners at Yale - Technical Builders & VCs',
+    'DC.description': 'Weekly entrepreneur meetup at Yale University connecting technical builders with VCs',
+    'DC.subject': 'startup community, entrepreneur meetup, Yale University, New Haven, Connecticut',
+    'revisit-after': '7 days',
+    'distribution': 'local',
+    'area': 'New Haven, Connecticut',
+    'placename': 'Yale University',
+    'region': 'Connecticut',
   },
 };
 
@@ -79,7 +92,7 @@ const jsonLd = [
     alternateName: 'Signal',
     url: 'https://signal.community',
     logo: 'https://signal.community/og-image.svg',
-    description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators for meaningful conversations about building the future.',
+    description: 'Weekly dinners at Yale University connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists and operators. New Haven\'s premier startup community for meaningful conversations about building the future of technology and innovation.',
   foundingLocation: {
     '@type': 'Place',
     name: 'New Haven, CT',
@@ -101,8 +114,8 @@ const jsonLd = [
   },
   event: {
     '@type': 'Event',
-    name: 'Weekly Builder Dinners',
-    description: 'Weekly dinners connecting builders with VCs and operators for meaningful conversations about building the future.',
+    name: 'Weekly Dinners at Yale - Technical Builders & VCs',
+    description: 'Weekly entrepreneur meetup at Yale University every Thursday. Connect with 10 technical builders, startup founders, and top-tier venture capitalists in New Haven. Premier startup networking event for Yale\'s innovation community.',
     startDate: '2024-01-01',
     endDate: '2024-12-31',
     eventStatus: 'https://schema.org/EventScheduled',
@@ -182,8 +195,8 @@ const jsonLd = [
 {
   '@context': 'https://schema.org',
   '@type': 'EventSeries',
-  name: 'Signal Weekly Builder Dinners',
-  description: 'Weekly recurring dinners for builders, entrepreneurs, and VCs at Yale University',
+  name: 'Signal Weekly Dinners at Yale - Technical Builders & VCs',
+  description: 'Weekly recurring entrepreneur meetup at Yale University connecting technical builders, startup founders, and venture capitalists in New Haven, Connecticut. Premier startup community events every Thursday.',
   url: 'https://signal.community',
   image: 'https://signal.community/og-image.svg',
   startDate: '2024-01-01',
@@ -219,7 +232,7 @@ const jsonLd = [
   '@type': 'WebSite',
   name: 'Signal Community',
   url: 'https://signal.community',
-  description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators',
+  description: 'Weekly dinners at Yale University connecting technical builders, entrepreneurs, and startup founders with VCs. New Haven\'s premier startup community and innovation hub.',
   potentialAction: {
     '@type': 'SearchAction',
     target: {
@@ -228,6 +241,54 @@ const jsonLd = [
     },
     'query-input': 'required name=search_term_string'
   }
+},
+{
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': 'https://signal.community/#localbusiness',
+  name: 'Signal Community - Weekly Dinners at Yale',
+  description: 'Weekly entrepreneur meetup and startup community at Yale University. Connecting technical builders, startup founders, and VCs in New Haven, Connecticut every Thursday.',
+  url: 'https://signal.community',
+  email: 'nicolas.gertler@yale.edu',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'New Haven',
+    addressRegion: 'CT',
+    addressCountry: 'US',
+    postalCode: '06511'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 41.3083,
+    longitude: -72.9279
+  },
+  openingHours: 'Th 18:00-20:00',
+  telephone: 'Contact via email',
+  priceRange: 'Free (Invitation Only)',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Weekly Builder Dinners',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Event',
+          name: 'Weekly Dinners at Yale - Technical Builders & VCs'
+        }
+      }
+    ]
+  },
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'New Haven'
+    },
+    {
+      '@type': 'State', 
+      name: 'Connecticut'
+    }
+  ],
+  keywords: 'weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, startup networking Yale, VC events Yale University'
 }];
 
 export default function RootLayout({
@@ -272,11 +333,7 @@ export default function RootLayout({
         {/* Viewport */}
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         
-        {/* Additional SEO meta tags */}
-        <meta name="geo.region" content="US-CT" />
-        <meta name="geo.placename" content="New Haven" />
-        <meta name="geo.position" content="41.3083;-72.9279" />
-        <meta name="ICBM" content="41.3083, -72.9279" />
+        {/* Additional SEO meta tags handled in metadata object */}
         
         {/* Cache control */}
         <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
