@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { Share2 } from 'lucide-react';
+import { Share } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import SplineIntro with preload hint
@@ -21,12 +21,12 @@ const ShareModal = dynamic(() => import('./components/ShareModal'), {
   ssr: false,
 });
 
-// Terminal loading sequence data
+// Terminal loading sequence data  
 const bootSequence = [
-  { text: "$ initializing signal...", delay: 350 },
-  { text: "✓ connecting to yale network", delay: 750 },
-  { text: "✓ establishing secure connection", delay: 850 },
-  { text: "$ signal ready", delay: 950 }
+  { text: "$ initializing signal...", delay: 200 },
+  { text: "✓ connecting to yale network", delay: 350 },
+  { text: "✓ establishing secure connection", delay: 500 },
+  { text: "$ signal ready", delay: 600 }
 ];
 
 // Enhanced animation variants for the hero section
@@ -118,7 +118,7 @@ function TerminalLoader({ onComplete }: { onComplete: () => void }) {
         setCurrentLine(currentLine + 1);
         setProgress((currentLine + 1) / bootSequence.length * 100);
       } else {
-        setTimeout(onComplete, 500);
+        setTimeout(onComplete, 250);
       }
     }, bootSequence[currentLine]?.delay || 800);
 
@@ -552,8 +552,8 @@ export default function Home() {
       }, 2000);
     }
 
-    // Start background effect after intro completes
-    const timer = setTimeout(() => setShowBackground(true), 8000); // Start shortly after intro
+    // Start background effect after intro completes  
+    const timer = setTimeout(() => setShowBackground(true), 3000); // Start shortly after intro
     return () => clearTimeout(timer);
   }, []);
 
@@ -573,7 +573,7 @@ export default function Home() {
       
       <AnimatePresence mode="wait">
                   {showSpline ? (
-            <SplineIntro onComplete={handleSplineComplete} duration={7000} />
+            <SplineIntro onComplete={handleSplineComplete} duration={2000} />
           ) : isLoading ? (
           <TerminalLoader onComplete={handleLoadingComplete} />
         ) : (
@@ -583,36 +583,39 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" as const }}
             className="w-full relative z-10 min-h-screen flex flex-col"
           >
-            {/* Share Button - Top Right */}
+            {/* Share Button - Top Right - Redesigned */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 2, duration: 0.6 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
               className="fixed top-6 right-6 z-20"
             >
               <motion.button
                 onClick={() => setIsShareModalOpen(true)}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: 10,
+                  rotateX: -5
+                }}
                 whileTap={{ scale: 0.95 }}
                 className="group relative"
+                style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
               >
-                {/* Glow effect */}
-                <motion.div
-                  className="absolute inset-0 bg-accent/20 rounded-full blur-xl"
-                  animate={{
-                    opacity: [0.5, 0.8, 0.5],
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                
-                {/* Button content - Share icon */}
-                <div className="relative bg-background/90 backdrop-blur-sm border border-accent/50 rounded-full w-12 h-12 flex items-center justify-center hover:border-accent hover:bg-accent/10 transition-all duration-200">
-                  <Share2 className="w-6 h-6 text-accent" />
+
+                {/* Button content - Modern design */}
+                <div className="relative bg-gradient-to-br from-card-bg/95 to-background/95 backdrop-blur-lg border border-accent/40 rounded-2xl w-14 h-14 flex items-center justify-center hover:border-accent hover:from-accent/5 hover:to-accent/10 transition-all duration-300 shadow-lg hover:shadow-accent/20">
+                  <div className="relative">
+                    <Share className="w-6 h-6 text-accent group-hover:text-accent-hover" />
+                  </div>
+                  
+                  {/* Tooltip label */}
+                  <motion.div
+                    className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-card-bg/90 backdrop-blur-sm border border-card-border rounded-lg px-2 py-1 text-xs text-foreground/80 font-mono whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+                    initial={{ y: 5 }}
+                    whileHover={{ y: 0 }}
+                  >
+                    share signal
+                  </motion.div>
                 </div>
               </motion.button>
             </motion.div>
@@ -658,7 +661,7 @@ export default function Home() {
                           "0 0 0px #00ff88"
                         ]
                       }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                      transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
                     >
                       signal
                     </motion.span>
@@ -668,7 +671,7 @@ export default function Home() {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.5, duration: 0.8 }}
+                    transition={{ delay: 0.8, duration: 0.8 }}
                     className="-mt-4 mb-16"
                   >
                     <span className="text-4xl sm:text-5xl lg:text-6xl font-normal text-foreground/80">
@@ -685,7 +688,7 @@ export default function Home() {
                       onClick={() => setIsContactModalOpen(true)}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 3, duration: 0.8 }}
+                      transition={{ delay: 1.2, duration: 0.8 }}
                       whileHover={{ 
                         scale: 1.05,
                         boxShadow: "0 10px 30px rgba(0, 255, 136, 0.3)"
@@ -713,14 +716,14 @@ export default function Home() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 4, duration: 0.6 }}
+                  transition={{ delay: 1.5, duration: 0.6 }}
                   className="text-center space-y-8"
                 >
                   {/* Contact Button */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 4.2, duration: 0.6 }}
+                    transition={{ delay: 1.7, duration: 0.6 }}
                     className="flex justify-center"
                   >
                     <motion.a
@@ -752,7 +755,7 @@ export default function Home() {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 4.8, duration: 0.6 }}
+                    transition={{ delay: 2.0, duration: 0.6 }}
                     className="text-xs text-foreground/80 font-mono"
                   >
                      betting on builders designing the next decade

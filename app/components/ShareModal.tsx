@@ -10,7 +10,7 @@ import {
   Linkedin,
   X,
   Check,
-  Share2,
+  Share,
   QrCode,
   Terminal
 } from 'lucide-react';
@@ -187,7 +187,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                  <Share2 className="w-4 h-4 text-background" />
+                  <Share className="w-4 h-4 text-background" />
                 </div>
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-foreground font-mono">share signal</h2>
@@ -337,7 +337,7 @@ export default function ShareModal({ isOpen, onClose }: ShareModalProps) {
                     onClick={handleNativeShare}
                     className="flex items-center space-x-2 px-2 sm:px-3 py-1.5 text-foreground/50 hover:text-foreground font-mono text-xs sm:text-sm transition-colors"
                   >
-                    <Share2 className="w-4 h-4" />
+                    <Share className="w-4 h-4" />
                     <span>more options</span>
                   </button>
                 )}

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   applicationName: "Signal",
   metadataBase: new URL('https://signal.community'),
   alternates: {
-    canonical: '/',
+    canonical: 'https://signal.community',
   },
   openGraph: {
     title: "Signal — 10 builders. weekly vc dinners.",
@@ -70,14 +70,16 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Signal Community',
-  alternateName: 'Signal',
-  url: 'https://signal.community',
-  logo: 'https://signal.community/og-image.svg',
-  description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators for meaningful conversations about building the future.',
+// Main organization and event structured data
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Signal Community',
+    alternateName: 'Signal',
+    url: 'https://signal.community',
+    logo: 'https://signal.community/og-image.svg',
+    description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators for meaningful conversations about building the future.',
   foundingLocation: {
     '@type': 'Place',
     name: 'New Haven, CT',
@@ -100,12 +102,21 @@ const jsonLd = {
   event: {
     '@type': 'Event',
     name: 'Weekly Builder Dinners',
-    description: 'Weekly dinners connecting builders with VCs and operators',
+    description: 'Weekly dinners connecting builders with VCs and operators for meaningful conversations about building the future.',
     startDate: '2024-01-01',
+    endDate: '2024-12-31',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    url: 'https://signal.community',
+    image: [
+      'https://signal.community/og-image.svg'
+    ],
     eventSchedule: {
       '@type': 'Schedule',
       repeatFrequency: 'P1W',
-      byDay: 'Thursday'
+      byDay: 'Thursday',
+      startTime: '18:00',
+      endTime: '20:00'
     },
     location: {
       '@type': 'Place',
@@ -114,15 +125,110 @@ const jsonLd = {
         '@type': 'PostalAddress',
         addressLocality: 'New Haven',
         addressRegion: 'CT',
-        addressCountry: 'US'
+        addressCountry: 'US',
+        postalCode: '06511'
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 41.3083,
+        longitude: -72.9279
       }
     },
     organizer: {
       '@type': 'Organization',
-      name: 'Signal Community'
+      name: 'Signal Community',
+      url: 'https://signal.community',
+      email: 'nicolas.gertler@yale.edu',
+      sameAs: [
+        'https://twitter.com/signalcommunity',
+        'https://linkedin.com/company/signal-community'
+      ]
+    },
+    performer: [
+      {
+        '@type': 'Organization',
+        name: 'Signal Community',
+        url: 'https://signal.community'
+      },
+      {
+        '@type': 'Person',
+        name: 'Guest VCs and Operators',
+        description: 'Top-tier venture capitalists and industry operators'
+      }
+    ],
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      price: '0',
+      priceCurrency: 'USD',
+      validFrom: '2024-01-01',
+      url: 'https://signal.community',
+      eligibleRegion: {
+        '@type': 'Place',
+        name: 'New Haven, CT'
+      },
+      description: 'Invitation-only events for selected builders'
+    },
+    audience: {
+      '@type': 'Audience',
+      audienceType: 'Entrepreneurs, Builders, Developers',
+      geographicArea: {
+        '@type': 'Place',
+        name: 'Yale University'
+      }
     }
   }
-};
+},
+{
+  '@context': 'https://schema.org',
+  '@type': 'EventSeries',
+  name: 'Signal Weekly Builder Dinners',
+  description: 'Weekly recurring dinners for builders, entrepreneurs, and VCs at Yale University',
+  url: 'https://signal.community',
+  image: 'https://signal.community/og-image.svg',
+  startDate: '2024-01-01',
+  endDate: '2024-12-31',
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'Yale University',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'New Haven',
+      addressRegion: 'CT',
+      addressCountry: 'US',
+      postalCode: '06511'
+    }
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: 'Signal Community',
+    url: 'https://signal.community'
+  },
+  offers: {
+    '@type': 'Offer',
+    availability: 'https://schema.org/InStock',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Invitation-only events'
+  }
+},
+{
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Signal Community',
+  url: 'https://signal.community',
+  description: 'A community of 10 builders at Yale meeting weekly with top-tier VCs and operators',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: 'https://signal.community/?q={search_term_string}'
+    },
+    'query-input': 'required name=search_term_string'
+  }
+}];
 
 export default function RootLayout({
   children,
@@ -144,15 +250,16 @@ export default function RootLayout({
         <script src="/spline-preload.js" async />
         
         {/* Favicons and app icons */}
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.svg" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
         <link rel="manifest" href="/site.webmanifest" />
         
         {/* Theme colors */}
-        <meta name="theme-color" content="#0f0f0f" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0f0f0f" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f0f0f" />
+        <meta name="theme-color" content="#00ff88" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#00ff88" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#00ff88" />
         <meta name="msapplication-TileColor" content="#0f0f0f" />
         
         {/* App capabilities */}
@@ -180,14 +287,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         
-        {/* Favicon and App Icons */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.svg" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.svg" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#00ff88" />
-        <meta name="msapplication-TileColor" content="#0f0f0f" />
+
         
         {/* Sitemap */}
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />

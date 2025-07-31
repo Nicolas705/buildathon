@@ -30,7 +30,7 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
     }
 
     // Show content immediately to prevent flash
-    const contentTimer = setTimeout(() => setShowContent(true), 50);
+    const contentTimer = setTimeout(() => setShowContent(true), 20);
 
     // Main timer for auto-progression
     const mainTimer = setTimeout(() => {
@@ -47,7 +47,7 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
       if (newProgress >= 100) {
         clearInterval(progressInterval);
       }
-    }, 50); // Reduced frequency for better performance
+    }, 25); // Higher frequency for smoother, faster progress
 
     return () => {
       clearTimeout(contentTimer);
@@ -85,8 +85,8 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
         initial={{ opacity: 0 }}
         animate={{ opacity: showContent ? 1 : 0 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }} // Faster transition
-        className="fixed inset-0 bg-background z-50 overflow-hidden"
+        transition={{ duration: 0.15, ease: "easeInOut" }} // Much faster transition
+        className="fixed inset-0 bg-background z-50 overflow-hidden will-change-transform"
       >
         {/* Main Spline Container */}
         <div className="relative w-full h-full">
@@ -94,8 +94,8 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: hasError ? 0 : 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="absolute inset-0"
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute inset-0 will-change-auto"
           >
                           <Spline
                 scene="https://prod.spline.design/6Ra-6TOXEw3lYhqa/scene.splinecode"
@@ -105,7 +105,9 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
                   width: '100%',
                   height: '100%',
                   opacity: isLoading ? 0.3 : 1,
-                  transition: 'opacity 0.5s ease-out',
+                  transition: 'opacity 0.2s ease-out',
+                  animationDuration: '0.5s', // Make internal animations faster
+                  animationTimingFunction: 'ease-out',
                 }}
               />
           </motion.div>
@@ -117,7 +119,7 @@ const SplineIntro = memo(function SplineIntro({ onComplete, duration = 10000 }: 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.1 }}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
               >
                 <div className="text-center">
