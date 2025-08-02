@@ -7,7 +7,9 @@ const nextConfig: NextConfig = {
   // Add redirects for canonical URL enforcement
   async redirects() {
     return [
-      // Redirect www to non-www (canonical) - root path
+      // Temporarily disabled to isolate Vercel redirect issue
+      // Will re-enable after Vercel is fixed
+      /*
       {
         source: '/',
         has: [
@@ -19,7 +21,6 @@ const nextConfig: NextConfig = {
         destination: 'https://signal.community/',
         permanent: true,
       },
-      // Redirect www to non-www (canonical) - all other paths
       {
         source: '/:path+',
         has: [
@@ -31,6 +32,7 @@ const nextConfig: NextConfig = {
         destination: 'https://signal.community/:path+',
         permanent: true,
       },
+      */
       // Additional canonical enforcement for edge cases
       {
         source: '/index',
