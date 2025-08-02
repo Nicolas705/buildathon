@@ -7,25 +7,31 @@ const nextConfig: NextConfig = {
   // Add redirects for canonical URL enforcement
   async redirects() {
     return [
-      // Redirect www to non-www (canonical)
+      // Redirect www to non-www (canonical) - root path
       {
-        source: '/(.*)',
+        source: '/',
         has: [
           {
             type: 'host',
             value: 'www.signal.community',
           },
         ],
-        destination: 'https://signal.community/:path*',
+        destination: 'https://signal.community/',
         permanent: true,
       },
-      // Redirect trailing slashes (except root)
+      // Redirect www to non-www (canonical) - all other paths
       {
-        source: '/:path*/',
-        destination: '/:path*',
+        source: '/:path+',
+        has: [
+          {
+            type: 'host',
+            value: 'www.signal.community',
+          },
+        ],
+        destination: 'https://signal.community/:path+',
         permanent: true,
       },
-      // Additional canonical enforcement for any edge cases
+      // Additional canonical enforcement for edge cases
       {
         source: '/index',
         destination: '/',
@@ -44,6 +50,12 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/(.*)',
+        has: [
+          {
+            type: 'host',
+            value: 'signal.community',
+          },
+        ],
         headers: [
           // Security headers for SEO
           {
@@ -66,7 +78,7 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
-          // Canonical domain enforcement - Multiple approaches
+          // Canonical domain enforcement - Only for main domain
           {
             key: 'Link',
             value: '<https://signal.community>; rel="canonical"',
