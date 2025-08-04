@@ -5,11 +5,7 @@ import { useState, useEffect } from 'react';
 import { Share } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
-// Dynamically import SplineIntro with preload hint
-const SplineIntro = dynamic(() => import('./components/SplineIntro'), {
-  ssr: false,
-  loading: () => null, // Minimize loading state for faster perceived performance
-});
+
 
 // Dynamically import SplineBackground
 const SplineBackground = dynamic(() => import('./components/SplineBackground'), {
@@ -524,43 +520,26 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 
 
 export default function Home() {
-  const [showSpline, setShowSpline] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [showBackground, setShowBackground] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   useEffect(() => {
-    // Preload Spline scenes for optimal performance
+    // Preload background scene for optimal performance
     if (typeof window !== 'undefined') {
-      // Preload intro scene
-      const introLink = document.createElement('link');
-      introLink.rel = 'prefetch';
-      introLink.href = 'https://prod.spline.design/6Ra-6TOXEw3lYhqa/scene.splinecode';
-      introLink.as = 'fetch';
-      introLink.crossOrigin = 'anonymous';
-      document.head.appendChild(introLink);
-      
-      // Preload background scene with slight delay
-      setTimeout(() => {
-        const bgLink = document.createElement('link');
-        bgLink.rel = 'prefetch';
-        bgLink.href = 'https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode';
-        bgLink.as = 'fetch';
-        bgLink.crossOrigin = 'anonymous';
-        document.head.appendChild(bgLink);
-      }, 2000);
+      const bgLink = document.createElement('link');
+      bgLink.rel = 'prefetch';
+      bgLink.href = 'https://prod.spline.design/lfUqHnc-APD4Z3CK/scene.splinecode';
+      bgLink.as = 'fetch';
+      bgLink.crossOrigin = 'anonymous';
+      document.head.appendChild(bgLink);
     }
 
-    // Start background effect after intro completes  
-    const timer = setTimeout(() => setShowBackground(true), 3000); // Start shortly after intro
+    // Start background effect after loading completes  
+    const timer = setTimeout(() => setShowBackground(true), 1500);
     return () => clearTimeout(timer);
   }, []);
-
-  const handleSplineComplete = () => {
-    setShowSpline(false);
-    setIsLoading(true);
-  };
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -572,9 +551,7 @@ export default function Home() {
       {showBackground && <SplineBackground />}
       
       <AnimatePresence mode="wait">
-                  {showSpline ? (
-            <SplineIntro onComplete={handleSplineComplete} duration={2000} />
-          ) : isLoading ? (
+        {isLoading ? (
           <TerminalLoader onComplete={handleLoadingComplete} />
         ) : (
           <motion.div
