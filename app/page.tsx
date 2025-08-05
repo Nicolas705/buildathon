@@ -332,21 +332,22 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   const currentValue = formData[currentStepData?.field];
   const canProceed = currentValue && currentValue.trim().length > 0 && !validationError;
 
-  if (!isOpen) return null;
-
   return (
     <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-background/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-        onClick={onClose}
-      >
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="fixed inset-0 bg-background/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={onClose}
+        >
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="bg-card-bg border border-card-border rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
@@ -512,7 +513,8 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
             )}
           </div>
         </motion.div>
-      </motion.div>
+        </motion.div>
+      )}
     </AnimatePresence>
   );
 }
@@ -665,22 +667,21 @@ export default function Home() {
                       onClick={() => setIsContactModalOpen(true)}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2, duration: 0.8 }}
+                      transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
                       whileHover={{ 
-                        scale: 1.05,
-                        boxShadow: "0 10px 30px rgba(0, 255, 136, 0.3)"
+                        scale: 1.02,
+                        transition: { duration: 0.2, ease: "easeOut" }
                       }}
-                      whileTap={{ scale: 0.95 }}
-                      className="inline-flex items-center space-x-3 px-8 py-4 bg-accent hover:bg-accent-hover text-background font-medium rounded-lg transition-all duration-200 font-mono border border-accent group"
+                      whileTap={{ 
+                        scale: 0.98,
+                        transition: { duration: 0.1, ease: "easeOut" }
+                      }}
+                      className="group inline-flex items-center space-x-3 px-8 py-4 bg-accent hover:bg-accent-hover text-background font-medium rounded-lg font-mono border border-accent shadow-lg hover:shadow-accent/20 transition-all duration-300 ease-out"
                     >
                       <span>./apply.sh</span>
-                      <motion.span 
-                        className="text-lg"
-                        animate={{ x: [0, 5, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      >
+                      <span className="text-lg transition-transform duration-300 ease-out group-hover:translate-x-1">
                         →
-                      </motion.span>
+                      </span>
                     </motion.button>
                   </motion.div>
                 </motion.div>
