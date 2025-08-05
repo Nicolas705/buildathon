@@ -197,6 +197,23 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [validationError, setValidationError] = useState<string>('');
 
+  // Reset form state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentStep(0);
+      setFormData({
+        name: '',
+        email: '',
+        linkedin: '',
+        github: '',
+        accomplishments: ''
+      });
+      setIsSubmitting(false);
+      setIsSubmitted(false);
+      setValidationError('');
+    }
+  }, [isOpen]);
+
   const steps = [
     {
       id: 'name',
@@ -548,7 +565,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background relative flex items-center justify-center overflow-hidden">
+    <div 
+      className="min-h-screen bg-background relative flex items-center justify-center overflow-hidden"
+      style={{ isolation: 'isolate' }}
+    >
       {/* Spline background effect */}
       {showBackground && <SplineBackground />}
       
@@ -667,21 +687,31 @@ export default function Home() {
                       onClick={() => setIsContactModalOpen(true)}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
+                      transition={{ delay: 1.2, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                       whileHover={{ 
-                        scale: 1.02,
-                        transition: { duration: 0.2, ease: "easeOut" }
+                        scale: 1.01,
+                        boxShadow: "0 8px 25px rgba(0, 255, 136, 0.15)",
+                        transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
                       }}
                       whileTap={{ 
-                        scale: 0.98,
-                        transition: { duration: 0.1, ease: "easeOut" }
+                        scale: 0.99,
+                        transition: { duration: 0.1, ease: [0.25, 0.1, 0.25, 1] }
                       }}
-                      className="group inline-flex items-center space-x-3 px-8 py-4 bg-accent hover:bg-accent-hover text-background font-medium rounded-lg font-mono border border-accent shadow-lg hover:shadow-accent/20 transition-all duration-300 ease-out"
+                      className="inline-flex items-center space-x-3 px-8 py-4 bg-accent text-background font-medium rounded-lg font-mono border border-accent"
+                      style={{ 
+                        boxShadow: "0 4px 12px rgba(0, 255, 136, 0.1)",
+                        willChange: "transform, box-shadow"
+                      }}
                     >
                       <span>./apply.sh</span>
-                      <span className="text-lg transition-transform duration-300 ease-out group-hover:translate-x-1">
+                      <motion.span 
+                        className="text-lg"
+                        initial={{ x: 0 }}
+                        whileHover={{ x: 2 }}
+                        transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                      >
                         →
-                      </span>
+                      </motion.span>
                     </motion.button>
                   </motion.div>
                 </motion.div>
