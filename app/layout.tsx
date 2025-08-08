@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Signal — Weekly Dinners at Yale | 10 Technical Builders & VCs",
-  description: "Weekly dinners at Yale University every Thursday. 10 technical builders, entrepreneurs, and top-tier VCs. Join Yale's premier startup community for meaningful conversations about building the future. Yale founder meetups in Connecticut.",
+  description: "Weekly dinners at Yale University. 10 technical builders, entrepreneurs, and top-tier VCs, founders, and thought leaders. Join Yale's premier startup community for meaningful conversations about building the future.",
   keywords: "weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, builder dinners Connecticut, VC events Yale University, startup networking Yale, tech entrepreneur events New Haven, Yale founder community, Connecticut startup scene, New Haven entrepreneurs, Yale innovation hub, builder community Yale, startup founders Connecticut, venture capital New Haven, tech meetup Yale, entrepreneur dinners Yale University, Connecticut venture capital, Yale tech scene, New Haven startup network",
   authors: [{ name: "Signal Community", url: 'https://signal.community' }],
   creator: "Signal Community",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Signal — Weekly Dinners at Yale | Technical Builders & VCs",
-    description: "Weekly dinners at Yale University connecting 10 technical builders with top-tier VCs and operators. Join New Haven's premier startup community every Thursday for meaningful conversations about building the future.",
+    description: "Weekly dinners at Yale University connecting 10 technical builders with top-tier VCs, founders, and thought leaders. Join New Haven's premier startup community every Thursday for meaningful conversations about building the future.",
     url: 'https://signal.community',
     siteName: 'Signal Community',
     locale: 'en_US',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'Signal Community - Weekly Dinners at Yale University connecting technical builders with VCs and operators',
+        alt: 'Signal Community - Weekly Dinners at Yale University connecting technical builders with VCs, founders, and thought leaders',
         type: 'image/svg+xml',
       },
     ],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     site: '@signalcommunity',
     creator: '@signalcommunity',
     title: "Signal — Weekly Dinners at Yale | Technical Builders & VCs",
-    description: "Weekly dinners at Yale University connecting technical builders with VCs. Join New Haven's premier startup community every Thursday for meaningful conversations.",
+    description: "Weekly dinners at Yale University connecting technical builders with VCs, founders, and thought leaders. Join New Haven's premier startup community every Thursday for meaningful conversations.",
     images: ['/og-image.svg'],
   },
   robots: {
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     'geo.position': '41.3083;-72.9279',
     'ICBM': '41.3083, -72.9279',
     'DC.title': 'Weekly Dinners at Yale - Technical Builders & VCs',
-    'DC.description': 'Weekly entrepreneur meetup at Yale University connecting technical builders with VCs',
+    'DC.description': 'Weekly entrepreneur meetup at Yale University connecting technical builders with VCs, founders, and thought leaders',
     'DC.subject': 'startup community, entrepreneur meetup, Yale University, New Haven, Connecticut',
     'revisit-after': '7 days',
     'distribution': 'local',
@@ -92,7 +92,7 @@ const jsonLd = [
     alternateName: 'Signal',
     url: 'https://signal.community',
     logo: 'https://signal.community/og-image.svg',
-    description: 'Weekly dinners at Yale University connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists and operators. New Haven\'s premier startup community for meaningful conversations about building the future of technology and innovation.',
+    description: 'Weekly dinners at Yale University connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists, founders, and thought leaders. New Haven\'s premier startup community for meaningful conversations about building the future of technology and innovation.',
   foundingLocation: {
     '@type': 'Place',
     name: 'New Haven, CT',
@@ -115,7 +115,7 @@ const jsonLd = [
   event: {
     '@type': 'Event',
     name: 'Weekly Dinners at Yale - Technical Builders & VCs',
-    description: 'Weekly entrepreneur meetup at Yale University every Thursday. Connect with 10 technical builders, startup founders, and top-tier venture capitalists in New Haven. Premier startup networking event for Yale\'s innovation community.',
+      description: 'Weekly entrepreneur meetup at Yale University every Thursday. Connect with 10 technical builders, startup founders, top-tier venture capitalists, and thought leaders in New Haven. Premier startup networking event for Yale\'s innovation community.',
     startDate: '2024-01-01',
     endDate: '2024-12-31',
     eventStatus: 'https://schema.org/EventScheduled',
@@ -165,8 +165,8 @@ const jsonLd = [
       },
       {
         '@type': 'Person',
-        name: 'Guest VCs and Operators',
-        description: 'Top-tier venture capitalists and industry operators'
+          name: 'Guest VCs, Founders, and Thought Leaders',
+          description: 'Top-tier venture capitalists, founders, and thought leaders'
       }
     ],
     offers: {
@@ -196,7 +196,7 @@ const jsonLd = [
   '@context': 'https://schema.org',
   '@type': 'EventSeries',
   name: 'Signal Weekly Dinners at Yale - Technical Builders & VCs',
-  description: 'Weekly recurring entrepreneur meetup at Yale University connecting technical builders, startup founders, and venture capitalists in New Haven, Connecticut. Premier startup community events every Thursday.',
+  description: 'Weekly recurring entrepreneur meetup at Yale University connecting technical builders, startup founders, venture capitalists, and thought leaders in New Haven, Connecticut. Premier startup community events every Thursday.',
   url: 'https://signal.community',
   image: 'https://signal.community/og-image.svg',
   startDate: '2024-01-01',
@@ -232,7 +232,7 @@ const jsonLd = [
   '@type': 'WebSite',
   name: 'Signal Community',
   url: 'https://signal.community',
-  description: 'Weekly dinners at Yale University connecting technical builders, entrepreneurs, and startup founders with VCs. New Haven\'s premier startup community and innovation hub.',
+  description: 'Weekly dinners at Yale University connecting technical builders, entrepreneurs, and startup founders with VCs, founders, and thought leaders. New Haven\'s premier startup community and innovation hub.',
   potentialAction: {
     '@type': 'SearchAction',
     target: {
@@ -247,7 +247,7 @@ const jsonLd = [
   '@type': 'LocalBusiness',
   '@id': 'https://signal.community/#localbusiness',
   name: 'Signal Community - Weekly Dinners at Yale',
-  description: 'Weekly entrepreneur meetup and startup community at Yale University. Connecting technical builders, startup founders, and VCs in New Haven, Connecticut every Thursday.',
+  description: 'Weekly entrepreneur meetup and startup community at Yale University. Connecting technical builders, startup founders, VCs, and thought leaders in New Haven, Connecticut every Thursday.',
   url: 'https://signal.community',
   email: 'nicolas.gertler@yale.edu',
   address: {
@@ -299,7 +299,7 @@ const jsonLd = [
       name: 'What are Signal\'s weekly dinners at Yale?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Signal hosts weekly dinners every Thursday at Yale University, connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists and industry operators in New Haven, Connecticut.'
+        text: 'Signal hosts weekly dinners every Thursday at Yale University, connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists, founders, and thought leaders in New Haven, Connecticut.'
       }
     },
     {
@@ -331,7 +331,7 @@ const jsonLd = [
       name: 'What makes Signal different from other startup meetups in Connecticut?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Signal is New Haven\'s premier startup community, hosting intimate weekly dinners that bring together only 10 carefully selected technical builders with top-tier VCs. We focus on meaningful conversations rather than large networking events.'
+        text: 'Signal is New Haven\'s premier startup community, hosting intimate weekly dinners that bring together only 10 carefully selected technical builders with top-tier VCs, founders, and thought leaders. We focus on meaningful conversations rather than large networking events.'
       }
     }
   ]

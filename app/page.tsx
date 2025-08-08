@@ -674,7 +674,7 @@ export default function Home() {
                     className="-mt-4 mb-16"
                   >
                     <span className="text-4xl sm:text-5xl lg:text-6xl font-normal text-foreground/80">
-                      10 builders. weekly vc dinners.
+                      10 builders. weekly dinners with VCs, founders, and thought leaders.
                     </span>
                   </motion.div>
 

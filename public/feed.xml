@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>Signal Community — Weekly Dinners at Yale</title>
-    <description>Weekly dinners at Yale University connecting technical builders, entrepreneurs, and top-tier VCs. New Haven's premier startup community every Thursday.</description>
+    <description>Weekly dinners at Yale University connecting technical builders, entrepreneurs, and top-tier VCs, founders, and thought leaders.</description>
     <link>https://signal.community</link>
     <atom:link href="https://signal.community/feed.xml" rel="self" type="application/rss+xml"/>
     <language>en-US</language>
@@ -20,7 +20,7 @@
     
     <item>
       <title>Weekly Dinners at Yale - Join New Haven's Premier Startup Community</title>
-      <description>Connect with 10 technical builders, entrepreneurs, and top-tier venture capitalists every Thursday at Yale University. Meaningful conversations about building the future of technology and innovation in New Haven, Connecticut.</description>
+      <description>Connect with 10 technical builders, entrepreneurs, and top-tier venture capitalists, founders, and thought leaders every Thursday at Yale University. Meaningful conversations about building the future of technology and innovation in New Haven, Connecticut.</description>
       <link>https://signal.community</link>
       <guid isPermaLink="true">https://signal.community</guid>
       <pubDate>Thu, 19 Dec 2024 00:00:00 +0000</pubDate>
@@ -32,11 +32,11 @@
       <category>Technical Builders</category>
       <category>Venture Capital</category>
       <content:encoded><![CDATA[
-        <p>Join Signal's weekly dinners at Yale University every Thursday. Connect with 10 technical builders, entrepreneurs, and top-tier venture capitalists in New Haven's premier startup community.</p>
+        <p>Join Signal's weekly dinners at Yale University every Thursday. Connect with 10 technical builders, entrepreneurs, and top-tier venture capitalists, founders, and thought leaders in New Haven's premier startup community.</p>
         <p>Our weekly gatherings bring together the most innovative minds in the Yale ecosystem for meaningful conversations about building the future of technology and innovation.</p>
         <ul>
           <li>10 carefully selected technical builders and entrepreneurs</li>
-          <li>Top-tier venture capitalists and industry operators</li>
+          <li>Top-tier venture capitalists, founders, and thought leaders</li>
           <li>Weekly Thursday dinners at Yale University</li>
           <li>New Haven's premier startup networking community</li>
           <li>Focus on meaningful conversations about innovation</li>

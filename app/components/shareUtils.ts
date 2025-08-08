@@ -1,10 +1,10 @@
 export const shareMessages = {
-  sms: "Signal at Yale - 10 builders meet weekly with top VCs and operators. Meaningful conversations, no BS: signal.community",
+  sms: "Signal at Yale - 10 builders meet weekly with top VCs, founders, and thought leaders. Meaningful conversations, no BS: signal.community",
   email: {
     subject: "Signal at Yale - where builders meet capital",
     body: `Hey,
 
-Thought you'd be interested in Signal - 10 exceptional builders at Yale meeting weekly with top-tier VCs and operators.
+Thought you'd be interested in Signal - 10 exceptional builders at Yale meeting weekly with top-tier VCs, founders, and thought leaders.
 
 Every Thursday, we bring together people who are actually building things with investors who understand what it takes.
 
@@ -12,9 +12,9 @@ Check it out: signal.community
 
 Best,`
   },
-  twitter: "Signal at Yale - 10 builders, weekly dinners with top VCs and operators. Meaningful conversations for ambitious builders 🚀 https://signal.community",
-  whatsapp: "Check out Signal at Yale - 10 builders get weekly dinners with top VCs and operators. Meaningful conversations about building the future: https://signal.community",
-      linkedin: "Signal at Yale brings together 10 exceptional builders with leading VCs and operators every week. Real conversations, real connections, real impact. Learn more: https://signal.community"
+  twitter: "Signal at Yale - 10 builders, weekly dinners with top VCs, founders, and thought leaders. Meaningful conversations for ambitious builders 🚀 https://signal.community",
+  whatsapp: "Check out Signal at Yale - 10 builders get weekly dinners with top VCs, founders, and thought leaders. Meaningful conversations about building the future: https://signal.community",
+      linkedin: "Signal at Yale brings together 10 exceptional builders with leading VCs, founders, and thought leaders every week. Real conversations, real connections, real impact. Learn more: https://signal.community"
 };
 
 export const canUseNativeShare = (): boolean => {
