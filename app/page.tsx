@@ -19,10 +19,10 @@ const ShareModal = dynamic(() => import('./components/ShareModal'), {
 
 // Terminal loading sequence data  
 const bootSequence = [
-  { text: "$ initializing signal...", delay: 200 },
+  { text: "$ initializing yale ai hackathon...", delay: 200 },
   { text: "✓ connecting to yale network", delay: 350 },
   { text: "✓ establishing secure connection", delay: 500 },
-  { text: "$ signal ready", delay: 600 }
+  { text: "$ ready", delay: 600 }
 ];
 
 // Enhanced animation variants for the hero section
@@ -50,58 +50,18 @@ const itemVariants = {
   }
 };
 
-interface FormData {
+interface Track {
   name: string;
-  email: string;
-  linkedin: string;
-  github: string;
-  accomplishments: string;
+  summary: string;
+  examples: string[];
 }
 
-// Validation error interface (for future use)
-// interface ValidationError {
-//   field: string;
-//   message: string;
-// }
-
-// Validation functions
-const validateEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
-
-const validateGithubUrl = (url: string): boolean => {
-  const githubRegex = /^https?:\/\/(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
-  return githubRegex.test(url);
-};
-
-const validateLinkedInUrl = (url: string): boolean => {
-  const linkedinRegex = /^https?:\/\/(www\.)?linkedin\.com\/(in|pub)\/[a-zA-Z0-9_-]+\/?$/;
-  return linkedinRegex.test(url);
-};
-
-const validateName = (name: string): boolean => {
-  return name.trim().length >= 2 && name.trim().length <= 50 && /^[a-zA-Z\s'-]+$/.test(name.trim());
-};
-
-const validateAccomplishments = (text: string): boolean => {
-  const trimmed = text.trim();
-  return trimmed.length >= 50 && trimmed.length <= 2000 && !isSpamContent(trimmed);
-};
-
-const isSpamContent = (text: string): boolean => {
-  const spamPatterns = [
-    /(.)\1{10,}/i, // Repeated characters
-    /https?:\/\/[^\s]+/gi, // Multiple URLs
-    /\b(viagra|casino|lottery|winner|congratulations|urgent|act now)\b/gi, // Spam keywords
-    /[^\w\s]{5,}/i, // Too many special characters
-  ];
-  
-  const urlCount = (text.match(/https?:\/\/[^\s]+/gi) || []).length;
-  if (urlCount > 2) return true; // Too many URLs
-  
-  return spamPatterns.some(pattern => pattern.test(text));
-};
+interface SponsorTier {
+  name: string;
+  price: string;
+  perks: string[];
+  highlight?: boolean;
+}
 
 // Terminal loading component
 function TerminalLoader({ onComplete }: { onComplete: () => void }) {
@@ -183,366 +143,57 @@ function TerminalLoader({ onComplete }: { onComplete: () => void }) {
   );
 }
 
-// Contact Form Modal Component
-function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    linkedin: '',
-    github: '',
-    accomplishments: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [validationError, setValidationError] = useState<string>('');
-
-  // Reset form state when modal opens
-  useEffect(() => {
-    if (isOpen) {
-      setCurrentStep(0);
-      setFormData({
-        name: '',
-        email: '',
-        linkedin: '',
-        github: '',
-        accomplishments: ''
-      });
-      setIsSubmitting(false);
-      setIsSubmitted(false);
-      setValidationError('');
-    }
-  }, [isOpen]);
-
-  const steps = [
-    {
-      id: 'name',
-      question: "what's your name?",
-      placeholder: 'alex chen',
-      type: 'text',
-      field: 'name' as keyof FormData
-    },
-    {
-      id: 'email',
-      question: "what's your email?",
-      placeholder: 'alex@yale.edu',
-      type: 'email',
-      field: 'email' as keyof FormData
-    },
-    {
-      id: 'linkedin',
-      question: 'linkedin profile?',
-      placeholder: 'linkedin.com/in/alexchen',
-      type: 'url',
-      field: 'linkedin' as keyof FormData
-    },
-    {
-      id: 'github',
-      question: 'github profile link?',
-      placeholder: 'https://github.com/alexchen',
-      type: 'url',
-      field: 'github' as keyof FormData
-    },
-    {
-      id: 'accomplishments',
-      question: 'what are your most remarkable entrepreneurial or technical achievements?',
-      placeholder: 'Built a fintech app that processed $1M+ in transactions, created an open-source ML library with 10k+ stars, launched a startup that scaled to 50k users...',
-      type: 'textarea',
-      field: 'accomplishments' as keyof FormData
-    }
-  ];
-
-  const validateCurrentField = (): boolean => {
-    const currentField = steps[currentStep].field;
-    const value = formData[currentField];
-    
-    setValidationError('');
-    
-    switch (currentField) {
-      case 'name':
-        if (!validateName(value)) {
-          setValidationError('Name must be 2-50 characters and contain only letters, spaces, hyphens, and apostrophes');
-          return false;
-        }
-        break;
-      case 'email':
-        if (!validateEmail(value)) {
-          setValidationError('Please enter a valid email address');
-          return false;
-        }
-        break;
-      case 'linkedin':
-        if (value && !validateLinkedInUrl(value)) {
-          setValidationError('Please enter a valid LinkedIn profile URL (e.g., https://linkedin.com/in/username)');
-          return false;
-        }
-        break;
-      case 'github':
-        if (!validateGithubUrl(value)) {
-          setValidationError('Please enter a valid GitHub profile URL (e.g., https://github.com/username)');
-          return false;
-        }
-        break;
-      case 'accomplishments':
-        if (!validateAccomplishments(value)) {
-          setValidationError('Please provide a detailed response (50-2000 characters) about your accomplishments');
-          return false;
-        }
-        break;
-    }
-    return true;
-  };
-
-  const handleNext = () => {
-    if (!validateCurrentField()) {
-      return;
-    }
-    
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-      setValidationError('');
-    } else {
-      handleSubmit();
-    }
-  };
-
-  const handleSubmit = async () => {
-    setIsSubmitting(true);
-    
-    try {
-      // Send email via our API route
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          linkedin: formData.linkedin,
-          github: formData.github,
-          accomplishments: formData.accomplishments,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        setIsSubmitted(true);
-        console.log('Application submitted successfully:', result.message);
-      } else {
-        console.error('Failed to submit application:', result.error || 'Unknown error');
-        // Still show success to user as we logged the application server-side
-        setIsSubmitted(true);
-      }
-    } catch (error) {
-      console.error('Network error submitting application:', error);
-      // Show success anyway - the important thing is the form was completed
-      setIsSubmitted(true);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const currentStepData = steps[currentStep];
-  const isLastStep = currentStep === steps.length - 1;
-  const currentValue = formData[currentStepData?.field];
-  const canProceed = currentValue && currentValue.trim().length > 0 && !validationError;
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-          className="fixed inset-0 bg-background/95 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={onClose}
-        >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="bg-card-bg border border-card-border rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
-          onClick={(e) => e.stopPropagation()}
-        >
-          {/* Header */}
-          <div className="p-6 border-b border-card-border">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                  <span className="text-background font-mono font-bold text-sm">S</span>
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-foreground font-mono">signal application</h2>
-                  <p className="text-xs text-foreground/60 font-mono">
-                    step {currentStep + 1} of {steps.length}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={onClose}
-                className="text-foreground/50 hover:text-foreground transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-
-          {/* Progress bar */}
-          <div className="px-6 py-2">
-            <div className="w-full bg-background rounded-full h-1">
-              <motion.div
-                className="bg-accent h-1 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-6 min-h-[300px] flex flex-col">
-            {isSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex-1 flex flex-col items-center justify-center text-center space-y-6"
-              >
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-foreground font-mono mb-2">application submitted!</h3>
-                  <p className="text-foreground/70 font-mono text-sm">
-                    your application has been submitted to Signal.<br/>
-                    we&rsquo;ll review it and get back to you soon.
-                  </p>
-                </div>
-                <button
-                  onClick={onClose}
-                  className="px-6 py-2 bg-accent text-background rounded-lg font-mono text-sm hover:bg-accent-hover transition-colors"
-                >
-                  close
-                </button>
-              </motion.div>
-            ) : (
-              <>
-                <motion.div
-                  key={currentStep}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  className="flex-1"
-                >
-                  <div className="mb-8">
-                    <div className="font-mono text-accent text-sm mb-2">
-                      <span className="text-foreground/50">$</span> signal.apply()
-                    </div>
-                    <h3 className="text-2xl font-bold text-foreground font-mono mb-2">
-                      {currentStepData.question}
-                    </h3>
-
-                  </div>
-
-                  {currentStepData.type === 'textarea' ? (
-                    <textarea
-                      value={formData[currentStepData.field]}
-                      onChange={(e) => {
-                        setFormData(prev => ({ ...prev, [currentStepData.field]: e.target.value }));
-                        setValidationError(''); // Clear error on input
-                      }}
-                      placeholder={currentStepData.placeholder}
-                      className={`w-full bg-background border rounded-lg p-4 text-foreground font-mono text-sm resize-none h-32 focus:outline-none transition-colors ${
-                        validationError ? 'border-red-500 focus:border-red-500' : 'border-card-border focus:border-accent'
-                      }`}
-                      autoFocus
-                    />
-                  ) : (
-                    <input
-                      type={currentStepData.type}
-                      value={formData[currentStepData.field]}
-                      onChange={(e) => {
-                        setFormData(prev => ({ ...prev, [currentStepData.field]: e.target.value }));
-                        setValidationError(''); // Clear error on input
-                      }}
-                      placeholder={currentStepData.placeholder}
-                      className={`w-full bg-background border rounded-lg p-4 text-foreground font-mono text-sm focus:outline-none transition-colors ${
-                        validationError ? 'border-red-500 focus:border-red-500' : 'border-card-border focus:border-accent'
-                      }`}
-                      autoFocus
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && canProceed) {
-                          handleNext();
-                        }
-                      }}
-                    />
-                  )}
-
-                  {/* Error message display */}
-                  {validationError && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg"
-                    >
-                      <p className="text-red-400 font-mono text-xs">{validationError}</p>
-                    </motion.div>
-                  )}
-                </motion.div>
-
-                <div className="flex items-center justify-between pt-6">
-                  <button
-                    onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
-                    disabled={currentStep === 0}
-                    className="px-4 py-2 text-foreground/50 font-mono text-sm hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-                  >
-                    back
-                  </button>
-
-                  <motion.button
-                    onClick={handleNext}
-                    disabled={!canProceed || isSubmitting}
-                    whileHover={canProceed ? { scale: 1.02 } : {}}
-                    whileTap={canProceed ? { scale: 0.98 } : {}}
-                    className="px-6 py-2 bg-accent text-background rounded-lg font-mono text-sm hover:bg-accent-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-background/30 border-t-background rounded-full animate-spin" />
-                        <span>sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>{isLastStep ? 'submit' : 'next'}</span>
-                        <span>→</span>
-                      </>
-                    )}
-                  </motion.button>
-                </div>
-              </>
-            )}
-          </div>
-        </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
-
-
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [showBackground, setShowBackground] = useState(false);
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  
+  const tracks: Track[] = [
+    {
+      name: 'EdTech',
+      summary: 'AI-native learning tools built for shipping in classrooms and beyond.',
+      examples: ['AI-powered learning platforms', 'tutoring agents', 'adaptive content delivery']
+    },
+    {
+      name: 'FinTech',
+      summary: 'Models and systems that move money, measure risk, and price the future.',
+      examples: ['risk modeling', 'predictive markets', 'AI-native banking tools']
+    },
+    {
+      name: 'Bio/Med',
+      summary: 'From bits to biology — applied ML for healthcare and discovery.',
+      examples: ['diagnostics', 'drug discovery', 'computational biology']
+    },
+    {
+      name: 'Defense/GovTech',
+      summary: 'Civic-grade infrastructure: secure, verifiable, and deployable.',
+      examples: ['civic engagement', 'secure communications', 'decision support']
+    }
+  ];
+
+  const sponsorshipTiers: SponsorTier[] = [
+    {
+      name: 'Platinum Partner',
+      price: '$50,000+',
+      perks: ['Title sponsor', 'Keynote', 'Prize naming', 'Early resume/demo access', 'Custom activations'],
+      highlight: true
+    },
+    {
+      name: 'Gold Partner',
+      price: '$25,000+',
+      perks: ['Prominent branding', 'Prize naming', 'Resume/demo access', 'Mentor/workshop slot']
+    },
+    {
+      name: 'Silver Partner',
+      price: '$10,000+',
+      perks: ['Logo placement', 'API credits/prizes', 'Optional judging/mentorship']
+    },
+    {
+      name: 'In-Kind Partner',
+      price: 'in-kind',
+      perks: ['API credits', 'SDKs', 'Cloud services', 'Developer resources', 'Logo placement']
+    }
+  ];
 
   useEffect(() => {
     // Preload background scene for optimal performance
@@ -621,7 +272,7 @@ export default function Home() {
 
             {/* Hero Section */}
             <section className="relative px-6 py-8 sm:px-8 lg:px-12 w-full flex-1 flex items-start justify-center pt-16">
-              <div className="max-w-4xl mx-auto">
+              <div className="max-w-5xl mx-auto">
                 <motion.div
                   initial="hidden"
                   animate="visible"
@@ -643,7 +294,7 @@ export default function Home() {
                       }}
                       transition={{ duration: 2, repeat: Infinity }}
                     >
-                      <span className="text-foreground/50">$</span> cd /yale/signal && ls -la
+                      <span className="text-foreground/50">$</span> cd /yale/ai-hackathon && ls -la
                     </motion.span>
                   </motion.div>
                   
@@ -662,64 +313,161 @@ export default function Home() {
                       }}
                       transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
                     >
-                      signal
+                      yale ai hackathon 2025
                     </motion.span>
                   </motion.h1>
 
-                  {/* Subtitle moved closer to title */}
+                  {/* Subtitle */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8, duration: 0.8 }}
-                    className="-mt-4 mb-16"
+                    className="-mt-4"
                   >
-                    <span className="text-4xl sm:text-5xl lg:text-6xl font-normal text-foreground/80">
-                      10 builders. weekly dinners with VCs, founders, and thought leaders.
-                    </span>
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground/80">
+                      36-hour AI-native hackathon focused on deployable, production-grade builds.
+                    </div>
+                    <div className="mt-4 text-base sm:text-lg text-foreground/70 font-mono">
+                      Early November 2025 • Yale University, New Haven • Hosted by Yale Entrepreneurial Society (YES)
+                    </div>
                   </motion.div>
 
-                  {/* Apply button with responsive spacing */}
-                  <motion.div
-                    variants={itemVariants}
-                    className="pt-16 sm:pt-32 lg:pt-48 xl:pt-64"
-                  >
-                    <motion.button
-                      onClick={() => setIsContactModalOpen(true)}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-                      whileHover={{ 
-                        scale: 1.01,
-                        boxShadow: "0 8px 25px rgba(0, 255, 136, 0.15)",
-                        transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }
-                      }}
-                      whileTap={{ 
-                        scale: 0.99,
-                        transition: { duration: 0.1, ease: [0.25, 0.1, 0.25, 1] }
-                      }}
-                      className="inline-flex items-center space-x-3 px-8 py-4 bg-accent text-background font-medium rounded-lg font-mono border border-accent"
-                      style={{ 
-                        boxShadow: "0 4px 12px rgba(0, 255, 136, 0.1)",
-                        willChange: "transform, box-shadow"
-                      }}
-                    >
-                      <span>./apply.sh</span>
-                      <motion.span 
-                        className="text-lg"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 2 }}
-                        transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                  {/* CTAs */}
+                  <motion.div variants={itemVariants} className="pt-10">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                      <motion.a
+                        href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu,leia.ryan@yale.edu?subject=Yale%20AI%20Hackathon%202025%20Sponsorship&body=Hi%20YES%20team%2C%5Cn%5CnWe%27re%20interested%20in%20sponsoring%20the%20Yale%20AI%20Hackathon%202025.%20Could%20you%20share%20the%20sponsor%20deck%20and%20next%20steps%3F%5Cn%5C-%20%5BYour%20Name%5D%5Cn%5BCompany%5D%5Cn%5BRole%5D"
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        className="inline-flex items-center space-x-3 px-7 py-3 bg-accent text-background font-medium rounded-lg font-mono border border-accent"
+                        style={{ boxShadow: "0 4px 12px rgba(0, 255, 136, 0.1)" }}
                       >
-                        →
-                      </motion.span>
-                    </motion.button>
+                        <span>request sponsor deck</span>
+                        <span>→</span>
+                      </motion.a>
+                      <motion.a
+                        href="mailto:nicolas.gertler@yale.edu?subject=Yale%20AI%20Hackathon%20Updates&body=Hi%2C%20please%20notify%20me%20when%20participant%20applications%20open.%20Thank%20you!"
+                        whileHover={{ scale: 1.01 }}
+                        whileTap={{ scale: 0.99 }}
+                        className="inline-flex items-center space-x-3 px-7 py-3 bg-card-bg text-foreground font-medium rounded-lg font-mono border border-card-border hover:border-accent/50"
+                      >
+                        <span>get updates</span>
+                        <span>→</span>
+                      </motion.a>
+                    </div>
                   </motion.div>
                 </motion.div>
               </div>
             </section>
 
+            {/* About */}
+            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+              <div className="max-w-5xl mx-auto">
+                <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
+                  <div className="font-mono text-accent text-sm mb-3">
+                    <span className="text-foreground/50">$</span> hackathon.about()
+                  </div>
+                  <p className="text-foreground/80 leading-relaxed">
+                    This November, the Yale Entrepreneurial Society (YES) will host a 36-hour hackathon uniting high-signal student builders — developers, designers, and researchers — to ship AI-native products designed for real-world deployment. We bias toward production-ready: scalable, technically sound, and immediately applicable over flashy demos.
+                  </p>
+                  <div className="mt-4 text-sm text-foreground/60 font-mono">
+                    Early November 2025 • Yale University, New Haven • Hosted by <a href="https://yesatyale.org" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4">YES</a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Tracks */}
+            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+              <div className="max-w-5xl mx-auto">
+                <div className="font-mono text-accent text-sm mb-3">
+                  <span className="text-foreground/50">$</span> hackathon.tracks()
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  {tracks.map((track) => (
+                    <div key={track.name} className="bg-card-bg border border-card-border rounded-2xl p-6">
+                      <div className="flex items-start justify-between">
+                        <h3 className="text-xl font-semibold font-mono text-foreground">{track.name}</h3>
+                      </div>
+                      <p className="mt-2 text-sm text-foreground/70">{track.summary}</p>
+                      <ul className="mt-4 space-y-1 text-sm text-foreground/80 list-disc list-inside">
+                        {track.examples.map((ex) => (
+                          <li key={ex}>{ex}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* Why Sponsor */}
+            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+              <div className="max-w-5xl mx-auto">
+                <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
+                  <div className="font-mono text-accent text-sm mb-3">
+                    <span className="text-foreground/50">$</span> sponsors.why()
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-mono text-foreground font-semibold mb-2">early access to talent</h4>
+                      <p className="text-foreground/70 text-sm">Engage with some of the brightest AI-focused builders in the country, including cohorts like Z Fellows, Neo Scholars, and PearX.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-mono text-foreground font-semibold mb-2">showcase your technology</h4>
+                      <p className="text-foreground/70 text-sm">See your tools integrated into live, deployable projects — SDKs, APIs, models, and platforms in the loop.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-mono text-foreground font-semibold mb-2">recruitment pipeline</h4>
+                      <p className="text-foreground/70 text-sm">Build relationships with future founders and technical leaders — before graduation.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-mono text-foreground font-semibold mb-2">support real-world impact</h4>
+                      <p className="text-foreground/70 text-sm">Provide mentorship, technical guidance, and resources to turn prototypes into production.</p>
+                    </div>
+                  </div>
+                  <div className="mt-6">
+                    <a
+                      href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu,leia.ryan@yale.edu?subject=Sponsor%20Yale%20AI%20Hackathon%202025&body=Hi%20YES%20team%2C%20please%20share%20the%20sponsor%20tiers%20and%20benefits.%5Cn%5C-%20%5BYour%20Name%5D%2C%20%5BCompany%5D"
+                      className="inline-flex items-center space-x-2 px-5 py-2 bg-accent text-background rounded-lg font-mono text-sm border border-accent"
+                    >
+                      <span>become a sponsor</span>
+                      <span>→</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Sponsorship Tiers */}
+            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+              <div className="max-w-5xl mx-auto">
+                <div className="font-mono text-accent text-sm mb-3">
+                  <span className="text-foreground/50">$</span> sponsors.tiers()
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                  {sponsorshipTiers.map((tier) => (
+                    <div
+                      key={tier.name}
+                      className={`rounded-2xl p-6 border ${tier.highlight ? 'border-accent/60 bg-card-bg' : 'border-card-border bg-card-bg'}`}
+                    >
+                      <div className="flex items-baseline justify-between">
+                        <h3 className="text-xl font-mono font-semibold">{tier.name}</h3>
+                        <span className="text-sm font-mono text-foreground/70">{tier.price}</span>
+                      </div>
+                      <ul className="mt-4 space-y-2 text-sm text-foreground/80 list-disc list-inside">
+                        {tier.perks.map((perk) => (
+                          <li key={perk}>{perk}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
             {/* Contact & Footer Section */}
-            <footer className="w-full px-6 py-8 sm:px-8 lg:px-12 mt-auto">
+            <footer className="w-full px-6 py-8 sm:px-8 lg:px-12 mt-8">
               <div className="max-w-4xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -727,15 +475,15 @@ export default function Home() {
                   transition={{ delay: 1.5, duration: 0.6 }}
                   className="text-center space-y-8"
                 >
-                  {/* Contact Button */}
+                  {/* Contact Buttons */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.7, duration: 0.6 }}
-                    className="flex justify-center"
+                    className="flex flex-col items-center gap-4"
                   >
                     <motion.a
-                      href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu?subject=Signal%20Inquiry%20%E2%80%93%20Weekly%20Builder%20Dinners"
+                      href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu,leia.ryan@yale.edu?subject=Yale%20AI%20Hackathon%202025%20Sponsorship"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
                       className="inline-flex items-center space-x-3 px-6 py-3 bg-card-bg border border-card-border rounded-xl hover:border-accent/50 hover:bg-card-bg/80 transition-all duration-300 text-foreground/80 hover:text-foreground font-mono text-sm group shadow-lg hover:shadow-accent/10"
@@ -743,7 +491,7 @@ export default function Home() {
                       <svg className="w-5 h-5 text-accent group-hover:text-accent-hover transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span>contact</span>
+                      <span>sponsorship inquiries</span>
                       <motion.span 
                         className="text-accent group-hover:text-accent-hover transition-colors"
                         animate={{ x: [0, 3, 0] }}
@@ -752,6 +500,9 @@ export default function Home() {
                         →
                       </motion.span>
                     </motion.a>
+                    <div className="text-xs text-foreground/70 font-mono">
+                      general contact: <a href="mailto:nicolas.gertler@yale.edu" className="text-accent hover:text-accent-hover">nicolas.gertler@yale.edu</a>
+                    </div>
                   </motion.div>
 
                   {/* Subtle divider */}
@@ -766,7 +517,7 @@ export default function Home() {
                     transition={{ delay: 2.0, duration: 0.6 }}
                     className="text-xs text-foreground/80 font-mono"
                   >
-                     betting on builders designing the next decade
+                     building deployable ai, not demos
                   </motion.div>
                 </motion.div>
               </div>
@@ -774,12 +525,6 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Contact Modal */}
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
-      />
       
       {/* Share Modal */}
       <ShareModal

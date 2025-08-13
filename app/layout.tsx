@@ -4,22 +4,22 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Signal — Weekly Dinners at Yale | 10 Technical Builders & VCs",
-  description: "Weekly dinners at Yale University. 10 technical builders, entrepreneurs, and top-tier VCs, founders, and thought leaders. Join Yale's premier startup community for meaningful conversations about building the future.",
-  keywords: "weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, builder dinners Connecticut, VC events Yale University, startup networking Yale, tech entrepreneur events New Haven, Yale founder community, Connecticut startup scene, New Haven entrepreneurs, Yale innovation hub, builder community Yale, startup founders Connecticut, venture capital New Haven, tech meetup Yale, entrepreneur dinners Yale University, Connecticut venture capital, Yale tech scene, New Haven startup network",
-  authors: [{ name: "Signal Community", url: 'https://signal.community' }],
-  creator: "Signal Community",
-  publisher: "Signal Community",
-  applicationName: "Signal",
+  title: "Yale AI Hackathon 2025 — YES | 36-hour AI-native Hackathon",
+  description: "Early November 2025 at Yale University (New Haven). A 36-hour AI-native hackathon hosted by Yale Entrepreneurial Society (YES), focused on deployable, production-grade builds across EdTech, FinTech, Bio/Med, and Defense/GovTech.",
+  keywords: "Yale AI Hackathon, YES hackathon, Yale Entrepreneurial Society, AI hackathon New Haven, student builders, EdTech, FinTech, BioMed, GovTech, AI-native products, sponsorship",
+  authors: [{ name: "Yale Entrepreneurial Society (YES)", url: 'https://yesatyale.org' }],
+  creator: "Yale Entrepreneurial Society (YES)",
+  publisher: "Yale Entrepreneurial Society (YES)",
+  applicationName: "Yale AI Hackathon 2025",
   metadataBase: new URL('https://signal.community'),
   alternates: {
     canonical: 'https://signal.community',
   },
   openGraph: {
-    title: "Signal — Weekly Dinners at Yale | Technical Builders & VCs",
-    description: "Weekly dinners at Yale University connecting 10 technical builders with top-tier VCs, founders, and thought leaders. Join New Haven's premier startup community every Thursday for meaningful conversations about building the future.",
+    title: "Yale AI Hackathon 2025 — YES | 36-hour AI-native Hackathon",
+    description: "A 36-hour AI-native hackathon at Yale University (Early November 2025), focused on production-ready builds. Hosted by YES.",
     url: 'https://signal.community',
-    siteName: 'Signal Community',
+    siteName: 'Yale AI Hackathon 2025',
     locale: 'en_US',
     type: 'website',
     images: [
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'Signal Community - Weekly Dinners at Yale University connecting technical builders with VCs, founders, and thought leaders',
+        alt: 'Yale AI Hackathon 2025 — Yale Entrepreneurial Society (YES)',
         type: 'image/svg+xml',
       },
     ],
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@signalcommunity',
     creator: '@signalcommunity',
-    title: "Signal — Weekly Dinners at Yale | Technical Builders & VCs",
-    description: "Weekly dinners at Yale University connecting technical builders with VCs, founders, and thought leaders. Join New Haven's premier startup community every Thursday for meaningful conversations.",
+    title: "Yale AI Hackathon 2025 — YES",
+    description: "36-hour AI-native hackathon at Yale University. Early November 2025. Hosted by YES.",
     images: ['/og-image.svg'],
   },
   robots: {
@@ -61,20 +61,19 @@ export const metadata: Metadata = {
       'msvalidate.01': process.env.BING_VERIFICATION || '',
     },
   },
-  category: 'Business',
-  classification: 'Business Network',
+  category: 'Event',
+  classification: 'Hackathon',
   other: {
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'black-translucent',
     'format-detection': 'telephone=no',
-    // Local SEO metadata
     'geo.region': 'US-CT',
     'geo.placename': 'New Haven, Connecticut',
     'geo.position': '41.3083;-72.9279',
     'ICBM': '41.3083, -72.9279',
-    'DC.title': 'Weekly Dinners at Yale - Technical Builders & VCs',
-    'DC.description': 'Weekly entrepreneur meetup at Yale University connecting technical builders with VCs, founders, and thought leaders',
-    'DC.subject': 'startup community, entrepreneur meetup, Yale University, New Haven, Connecticut',
+    'DC.title': 'Yale AI Hackathon 2025 — YES',
+    'DC.description': '36-hour AI-native hackathon at Yale University focused on deployable, production-grade builds',
+    'DC.subject': 'hackathon, AI, Yale, YES, New Haven, EdTech, FinTech, Bio/Med, GovTech',
     'revisit-after': '7 days',
     'distribution': 'local',
     'area': 'New Haven, Connecticut',
@@ -83,54 +82,49 @@ export const metadata: Metadata = {
   },
 };
 
-// Main organization and event structured data
+// Main organization and event structured data for the hackathon
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Signal Community',
-    alternateName: 'Signal',
-    url: 'https://signal.community',
+    name: 'Yale Entrepreneurial Society (YES)',
+    alternateName: 'YES',
+    url: 'https://yesatyale.org',
     logo: 'https://signal.community/og-image.svg',
-    description: 'Weekly dinners at Yale University connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists, founders, and thought leaders. New Haven\'s premier startup community for meaningful conversations about building the future of technology and innovation.',
-  foundingLocation: {
-    '@type': 'Place',
-    name: 'New Haven, CT',
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 41.3083,
-      longitude: -72.9279
-    }
+    description: 'Student-led organization fostering entrepreneurship at Yale University. Organizer of the Yale AI Hackathon 2025.',
+    foundingLocation: {
+      '@type': 'Place',
+      name: 'New Haven, CT',
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 41.3083,
+        longitude: -72.9279
+      }
+    },
+    sameAs: [
+      'https://twitter.com/yesatyale',
+      'https://www.linkedin.com/company/yale-entrepreneurial-society/'
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Sponsorship',
+      email: 'nicolas.gertler@yale.edu',
+      url: 'https://signal.community'
+    },
   },
-  sameAs: [
-    'https://twitter.com/signalcommunity',
-    'https://linkedin.com/company/signal-community'
-  ],
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'General Inquiry',
-    email: 'nicolas.gertler@yale.edu',
-    url: 'https://signal.community'
-  },
-  event: {
+  {
+    '@context': 'https://schema.org',
     '@type': 'Event',
-    name: 'Weekly Dinners at Yale - Technical Builders & VCs',
-      description: 'Weekly entrepreneur meetup at Yale University every Thursday. Connect with 10 technical builders, startup founders, top-tier venture capitalists, and thought leaders in New Haven. Premier startup networking event for Yale\'s innovation community.',
-    startDate: '2024-01-01',
-    endDate: '2024-12-31',
+    name: 'Yale AI Hackathon 2025',
+    description: 'A 36-hour AI-native hackathon at Yale University focused on deployable, production-grade builds across EdTech, FinTech, Bio/Med, and Defense/GovTech. Hosted by Yale Entrepreneurial Society (YES).',
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     url: 'https://signal.community',
     image: [
       'https://signal.community/og-image.svg'
     ],
-    eventSchedule: {
-      '@type': 'Schedule',
-      repeatFrequency: 'P1W',
-      byDay: 'Thursday',
-      startTime: '18:00',
-      endTime: '20:00'
-    },
+    startDate: '2025-11-01',
+    endDate: '2025-11-03',
     location: {
       '@type': 'Place',
       name: 'Yale University',
@@ -149,193 +143,31 @@ const jsonLd = [
     },
     organizer: {
       '@type': 'Organization',
-      name: 'Signal Community',
-      url: 'https://signal.community',
-      email: 'nicolas.gertler@yale.edu',
-      sameAs: [
-        'https://twitter.com/signalcommunity',
-        'https://linkedin.com/company/signal-community'
-      ]
+      name: 'Yale Entrepreneurial Society (YES)',
+      url: 'https://yesatyale.org',
+      email: 'nicolas.gertler@yale.edu'
     },
-    performer: [
-      {
-        '@type': 'Organization',
-        name: 'Signal Community',
-        url: 'https://signal.community'
-      },
-      {
-        '@type': 'Person',
-          name: 'Guest VCs, Founders, and Thought Leaders',
-          description: 'Top-tier venture capitalists, founders, and thought leaders'
-      }
-    ],
     offers: {
       '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
+      url: 'https://signal.community',
+      availability: 'https://schema.org/PreOrder',
       price: '0',
       priceCurrency: 'USD',
-      validFrom: '2024-01-01',
-      url: 'https://signal.community',
-      eligibleRegion: {
-        '@type': 'Place',
-        name: 'New Haven, CT'
-      },
-      description: 'Invitation-only events for selected builders'
+      description: 'Sponsorship opportunities available; participant applications open soon.'
     },
     audience: {
       '@type': 'Audience',
-      audienceType: 'Entrepreneurs, Builders, Developers',
-      geographicArea: {
-        '@type': 'Place',
-        name: 'Yale University'
-      }
+      audienceType: 'Students, Developers, Designers, Researchers'
     }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Yale AI Hackathon 2025',
+    url: 'https://signal.community',
+    description: 'YES presents a 36-hour AI-native hackathon at Yale University focused on production-grade builds.',
   }
-},
-{
-  '@context': 'https://schema.org',
-  '@type': 'EventSeries',
-  name: 'Signal Weekly Dinners at Yale - Technical Builders & VCs',
-  description: 'Weekly recurring entrepreneur meetup at Yale University connecting technical builders, startup founders, venture capitalists, and thought leaders in New Haven, Connecticut. Premier startup community events every Thursday.',
-  url: 'https://signal.community',
-  image: 'https://signal.community/og-image.svg',
-  startDate: '2024-01-01',
-  endDate: '2024-12-31',
-  eventStatus: 'https://schema.org/EventScheduled',
-  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  location: {
-    '@type': 'Place',
-    name: 'Yale University',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'New Haven',
-      addressRegion: 'CT',
-      addressCountry: 'US',
-      postalCode: '06511'
-    }
-  },
-  organizer: {
-    '@type': 'Organization',
-    name: 'Signal Community',
-    url: 'https://signal.community'
-  },
-  offers: {
-    '@type': 'Offer',
-    availability: 'https://schema.org/InStock',
-    price: '0',
-    priceCurrency: 'USD',
-    description: 'Invitation-only events'
-  }
-},
-{
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Signal Community',
-  url: 'https://signal.community',
-  description: 'Weekly dinners at Yale University connecting technical builders, entrepreneurs, and startup founders with VCs, founders, and thought leaders. New Haven\'s premier startup community and innovation hub.',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: 'https://signal.community/?q={search_term_string}'
-    },
-    'query-input': 'required name=search_term_string'
-  }
-},
-{
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': 'https://signal.community/#localbusiness',
-  name: 'Signal Community - Weekly Dinners at Yale',
-  description: 'Weekly entrepreneur meetup and startup community at Yale University. Connecting technical builders, startup founders, VCs, and thought leaders in New Haven, Connecticut every Thursday.',
-  url: 'https://signal.community',
-  email: 'nicolas.gertler@yale.edu',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'New Haven',
-    addressRegion: 'CT',
-    addressCountry: 'US',
-    postalCode: '06511'
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 41.3083,
-    longitude: -72.9279
-  },
-  openingHours: 'Th 18:00-20:00',
-  telephone: 'Contact via email',
-  priceRange: 'Free (Invitation Only)',
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Weekly Builder Dinners',
-    itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Event',
-          name: 'Weekly Dinners at Yale - Technical Builders & VCs'
-        }
-      }
-    ]
-  },
-  areaServed: [
-    {
-      '@type': 'City',
-      name: 'New Haven'
-    },
-    {
-      '@type': 'State', 
-      name: 'Connecticut'
-    }
-  ],
-  keywords: 'weekly dinners at Yale, technical builders at Yale, Yale startup community, entrepreneur meetup New Haven, startup networking Yale, VC events Yale University'
-},
-{
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'What are Signal\'s weekly dinners at Yale?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Signal hosts weekly dinners every Thursday at Yale University, connecting 10 technical builders, entrepreneurs, and startup founders with top-tier venture capitalists, founders, and thought leaders in New Haven, Connecticut.'
-      }
-    },
-    {
-      '@type': 'Question', 
-      name: 'Who can attend the weekly builder dinners?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The dinners are invitation-only for technical builders, entrepreneurs, startup founders, and selected members of Yale\'s innovation community. We carefully curate each gathering to ensure meaningful conversations.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: 'Where do the weekly dinners take place?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'The dinners take place at Yale University in New Haven, Connecticut. Specific locations vary, but are always within the Yale campus area.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: 'How can I apply to join Signal\'s startup community?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'You can apply through our website at signal.community. We look for technical builders, entrepreneurs, and founders with remarkable achievements who want to contribute to New Haven\'s startup ecosystem.'
-      }
-    },
-    {
-      '@type': 'Question',
-      name: 'What makes Signal different from other startup meetups in Connecticut?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Signal is New Haven\'s premier startup community, hosting intimate weekly dinners that bring together only 10 carefully selected technical builders with top-tier VCs, founders, and thought leaders. We focus on meaningful conversations rather than large networking events.'
-      }
-    }
-  ]
-}];
+];
 
 export default function RootLayout({
   children,
