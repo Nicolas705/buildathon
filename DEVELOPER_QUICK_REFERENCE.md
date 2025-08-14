@@ -192,3 +192,7 @@ className="font-medium"  // Medium weight
 - Commands use `$` prefix
 - Keep animations smooth and purposeful
 - Mobile-first responsive design 
+
+## Next.js Config Notes
+- Config file is `next.config.mjs` (ESM). TypeScript configs like `next.config.ts` are not supported in Next.js 15.
+- Deprecated `experimental.turbo` has been removed; use `turbopack` defaults.

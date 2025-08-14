@@ -7,8 +7,8 @@ import dynamic from 'next/dynamic';
 
 
 
-// Dynamically import SplineBackground
-const SplineBackground = dynamic(() => import('./components/SplineBackground'), {
+// Dynamically import custom Yale background (SVG-based)
+const YaleBackground = dynamic(() => import('./components/YaleBackground'), {
   ssr: false,
 });
 
@@ -220,8 +220,8 @@ export default function Home() {
       className="min-h-screen bg-background relative flex items-center justify-center overflow-hidden"
       style={{ isolation: 'isolate' }}
     >
-      {/* Spline background effect */}
-      {showBackground && <SplineBackground />}
+      {/* Custom Yale background */}
+      {showBackground && <YaleBackground />}
       
       <AnimatePresence mode="wait">
         {isLoading ? (

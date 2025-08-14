@@ -1,36 +1,26 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   // Performance optimizations
   trailingSlash: false,
-  
+
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  
-  // Experimental features for better performance
+
+  // Experiments
   experimental: {
     optimizePackageImports: ['framer-motion', '@splinetool/react-spline'],
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
   },
-  
+
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
   },
-  
-  // Webpack optimizations
+
+  // Webpack optimizations (used for production bundling)
   webpack: (config, { dev, isServer }) => {
-    // Optimize bundle splitting
     if (!dev && !isServer) {
       config.optimization.splitChunks.cacheGroups = {
         ...config.optimization.splitChunks.cacheGroups,
@@ -48,24 +38,17 @@ const nextConfig: NextConfig = {
         },
       };
     }
-    
     return config;
   },
-  
-  // Headers for better caching
+
+  // Headers for better caching and security
   async headers() {
     return [
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'DENY' },
         ],
       },
       {
@@ -82,3 +65,5 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+
