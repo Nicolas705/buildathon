@@ -17,12 +17,10 @@ const ShareModal = dynamic(() => import('./components/ShareModal'), {
   ssr: false,
 });
 
-// Terminal loading sequence data  
+// Minimal loading sequence
 const bootSequence = [
-  { text: "$ initializing yale ai hackathon...", delay: 200 },
-  { text: "✓ connecting to yale network", delay: 350 },
-  { text: "✓ establishing secure connection", delay: 500 },
-  { text: "$ ready", delay: 600 }
+  { text: "loading...", delay: 250 },
+  { text: "ready", delay: 350 }
 ];
 
 // Enhanced animation variants for the hero section
@@ -148,6 +146,9 @@ export default function Home() {
   const [showBackground, setShowBackground] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   
+  // Section ids for smooth keyboard navigation
+  const sectionIds = ['hero', 'about', 'tracks', 'principles', 'criteria', 'contact'];
+  
   const tracks: Track[] = [
     {
       name: 'EdTech',
@@ -211,6 +212,30 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Keyboard navigation between sections (ArrowUp/ArrowDown, j/k)
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      const key = e.key.toLowerCase();
+      if (!['arrowdown', 'arrowup', 'j', 'k'].includes(key)) return;
+      e.preventDefault();
+      // Find current section index by viewport midpoint
+      const mid = window.innerHeight / 2;
+      let currentIndex = 0;
+      sectionIds.forEach((id, idx) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= mid && rect.bottom >= mid) currentIndex = idx;
+      });
+      const direction = key === 'arrowdown' || key === 'j' ? 1 : -1;
+      const nextIndex = Math.min(Math.max(currentIndex + direction, 0), sectionIds.length - 1);
+      const target = document.getElementById(sectionIds[nextIndex]);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
   const handleLoadingComplete = () => {
     setIsLoading(false);
   };
@@ -271,7 +296,7 @@ export default function Home() {
             </motion.div>
 
             {/* Hero Section */}
-            <section className="relative px-6 py-8 sm:px-8 lg:px-12 w-full flex-1 flex items-start justify-center pt-16">
+            <section id="hero" className="relative px-6 py-8 sm:px-8 lg:px-12 w-full flex-1 flex items-start justify-center pt-16">
               <div className="max-w-5xl mx-auto">
                 <motion.div
                   initial="hidden"
@@ -279,42 +304,19 @@ export default function Home() {
                   variants={containerVariants}
                   className="space-y-12 text-center"
                 >
-                  {/* Terminal-like header with glitch effect */}
+                  {/* Minimal header */}
                   <motion.div
                     variants={itemVariants}
-                    className="font-mono text-accent text-sm relative"
+                    className="font-sans text-accent text-sm"
                   >
-                    <motion.span
-                      animate={{
-                        textShadow: [
-                          "0 0 0px #00ff88",
-                          "0 0 10px #00ff88",
-                          "0 0 0px #00ff88"
-                        ]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      <span className="text-foreground/50">$</span> cd /yale/ai-hackathon && ls -la
-                    </motion.span>
+                    Yale AI Hackathon 2025
                   </motion.div>
                   
                   <motion.h1
                     variants={itemVariants}
-                    className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-tight"
+                    className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] tracking-tight"
                   >
-                    <motion.span 
-                      className="font-mono text-accent"
-                      animate={{
-                        textShadow: [
-                          "0 0 0px #00ff88",
-                          "0 0 20px #00ff88",
-                          "0 0 0px #00ff88"
-                        ]
-                      }}
-                      transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
-                    >
-                      yale ai hackathon 2025
-                    </motion.span>
+                    Build AI that ships.
                   </motion.h1>
 
                   {/* Subtitle */}
@@ -324,34 +326,22 @@ export default function Home() {
                     transition={{ delay: 0.8, duration: 0.8 }}
                     className="-mt-4"
                   >
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground/80">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-normal text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
                       36-hour AI-native hackathon focused on deployable, production-grade builds.
                     </div>
-                    <div className="mt-4 text-base sm:text-lg text-foreground/70 font-mono">
-                      Early November 2025 • Yale University, New Haven • Hosted by Yale Entrepreneurial Society (YES)
-                    </div>
+                    <div className="mt-4 text-base sm:text-lg text-white/85 font-sans drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">Early November 2025 • Yale University, New Haven • Hosted by Yale Entrepreneurial Society (YES)</div>
                   </motion.div>
 
-                  {/* CTAs */}
-                  <motion.div variants={itemVariants} className="pt-10">
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                      <motion.a
-                        href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu,leia.ryan@yale.edu?subject=Yale%20AI%20Hackathon%202025%20Sponsorship&body=Hi%20YES%20team%2C%5Cn%5CnWe%27re%20interested%20in%20sponsoring%20the%20Yale%20AI%20Hackathon%202025.%20Could%20you%20share%20the%20sponsor%20deck%20and%20next%20steps%3F%5Cn%5C-%20%5BYour%20Name%5D%5Cn%5BCompany%5D%5Cn%5BRole%5D"
-                        whileHover={{ scale: 1.01 }}
-                        whileTap={{ scale: 0.99 }}
-                        className="inline-flex items-center space-x-3 px-7 py-3 bg-accent text-background font-medium rounded-lg font-mono border border-accent"
-                        style={{ boxShadow: "0 4px 12px rgba(0, 255, 136, 0.1)" }}
-                      >
-                        <span>request sponsor deck</span>
-                        <span>→</span>
-                      </motion.a>
+                  {/* CTA */}
+                  <motion.div variants={itemVariants} className="pt-8">
+                    <div className="flex items-center justify-center">
                       <motion.a
                         href="mailto:nicolas.gertler@yale.edu?subject=Yale%20AI%20Hackathon%20Updates&body=Hi%2C%20please%20notify%20me%20when%20participant%20applications%20open.%20Thank%20you!"
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
-                        className="inline-flex items-center space-x-3 px-7 py-3 bg-card-bg text-foreground font-medium rounded-lg font-mono border border-card-border hover:border-accent/50"
+                        className="inline-flex items-center space-x-2 px-6 py-3 bg-card-bg/80 backdrop-blur border border-card-border text-foreground font-medium rounded-md font-sans hover:border-accent/50"
                       >
-                        <span>get updates</span>
+                        <span>Get updates</span>
                         <span>→</span>
                       </motion.a>
                     </div>
@@ -361,16 +351,14 @@ export default function Home() {
             </section>
 
             {/* About */}
-            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+            <section id="about" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
                 <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
-                  <div className="font-mono text-accent text-sm mb-3">
-                    <span className="text-foreground/50">$</span> hackathon.about()
-                  </div>
+                  <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">About</h2>
                   <p className="text-foreground/80 leading-relaxed">
                     This November, the Yale Entrepreneurial Society (YES) will host a 36-hour hackathon uniting high-signal student builders — developers, designers, and researchers — to ship AI-native products designed for real-world deployment. We bias toward production-ready: scalable, technically sound, and immediately applicable over flashy demos.
                   </p>
-                  <div className="mt-4 text-sm text-foreground/60 font-mono">
+                  <div className="mt-4 text-sm text-foreground/60 font-sans">
                     Early November 2025 • Yale University, New Haven • Hosted by <a href="https://yesatyale.org" target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent-hover underline underline-offset-4">YES</a>
                   </div>
                 </div>
@@ -378,16 +366,14 @@ export default function Home() {
             </section>
 
             {/* Tracks */}
-            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+            <section id="tracks" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
-                <div className="font-mono text-accent text-sm mb-3">
-                  <span className="text-foreground/50">$</span> hackathon.tracks()
-                </div>
+                <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">Tracks</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {tracks.map((track) => (
                     <div key={track.name} className="bg-card-bg border border-card-border rounded-2xl p-6">
                       <div className="flex items-start justify-between">
-                        <h3 className="text-xl font-semibold font-mono text-foreground">{track.name}</h3>
+                        <h3 className="text-xl font-semibold font-sans text-foreground tracking-tight">{track.name}</h3>
                       </div>
                       <p className="mt-2 text-sm text-foreground/70">{track.summary}</p>
                       <ul className="mt-4 space-y-1 text-sm text-foreground/80 list-disc list-inside">
@@ -401,73 +387,38 @@ export default function Home() {
               </div>
             </section>
 
-            {/* Why Sponsor */}
-            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+            {/* Build principles */}
+            <section id="principles" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
                 <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
-                  <div className="font-mono text-accent text-sm mb-3">
-                    <span className="text-foreground/50">$</span> sponsors.why()
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-mono text-foreground font-semibold mb-2">early access to talent</h4>
-                      <p className="text-foreground/70 text-sm">Engage with some of the brightest AI-focused builders in the country, including cohorts like Z Fellows, Neo Scholars, and PearX.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-mono text-foreground font-semibold mb-2">showcase your technology</h4>
-                      <p className="text-foreground/70 text-sm">See your tools integrated into live, deployable projects — SDKs, APIs, models, and platforms in the loop.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-mono text-foreground font-semibold mb-2">recruitment pipeline</h4>
-                      <p className="text-foreground/70 text-sm">Build relationships with future founders and technical leaders — before graduation.</p>
-                    </div>
-                    <div>
-                      <h4 className="font-mono text-foreground font-semibold mb-2">support real-world impact</h4>
-                      <p className="text-foreground/70 text-sm">Provide mentorship, technical guidance, and resources to turn prototypes into production.</p>
-                    </div>
-                  </div>
-                  <div className="mt-6">
-                    <a
-                      href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu,leia.ryan@yale.edu?subject=Sponsor%20Yale%20AI%20Hackathon%202025&body=Hi%20YES%20team%2C%20please%20share%20the%20sponsor%20tiers%20and%20benefits.%5Cn%5C-%20%5BYour%20Name%5D%2C%20%5BCompany%5D"
-                      className="inline-flex items-center space-x-2 px-5 py-2 bg-accent text-background rounded-lg font-mono text-sm border border-accent"
-                    >
-                      <span>become a sponsor</span>
-                      <span>→</span>
-                    </a>
-                  </div>
+                  <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">Principles</h2>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-foreground/85 text-sm">
+                    <li className="bg-background/40 border border-card-border rounded-lg p-4">Ship something real. Working demo &gt; slide deck.</li>
+                    <li className="bg-background/40 border border-card-border rounded-lg p-4">Favor simple, robust systems over clever complexity.</li>
+                    <li className="bg-background/40 border border-card-border rounded-lg p-4">Design for users; validate with real data or workflows.</li>
+                    <li className="bg-background/40 border border-card-border rounded-lg p-4">Own the stack: data, model choice, and product UX.</li>
+                  </ul>
                 </div>
               </div>
             </section>
 
-            {/* Sponsorship Tiers */}
-            <section className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
+            {/* Criteria */}
+            <section id="criteria" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
-                <div className="font-mono text-accent text-sm mb-3">
-                  <span className="text-foreground/50">$</span> sponsors.tiers()
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                  {sponsorshipTiers.map((tier) => (
-                    <div
-                      key={tier.name}
-                      className={`rounded-2xl p-6 border ${tier.highlight ? 'border-accent/60 bg-card-bg' : 'border-card-border bg-card-bg'}`}
-                    >
-                      <div className="flex items-baseline justify-between">
-                        <h3 className="text-xl font-mono font-semibold">{tier.name}</h3>
-                        <span className="text-sm font-mono text-foreground/70">{tier.price}</span>
-                      </div>
-                      <ul className="mt-4 space-y-2 text-sm text-foreground/80 list-disc list-inside">
-                        {tier.perks.map((perk) => (
-                          <li key={perk}>{perk}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
+                <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
+                  <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">Criteria</h2>
+                  <ol className="list-decimal list-inside space-y-2 text-sm text-foreground/85">
+                    <li>Deployment readiness: reliability, basic security, and infra choices.</li>
+                    <li>Technical depth: modeling, data pipeline, and systems tradeoffs.</li>
+                    <li>User value: a clear problem/benefit with usable UX.</li>
+                    <li>Execution: quality of craft and speed over the 36 hours.</li>
+                  </ol>
                 </div>
               </div>
             </section>
 
             {/* Contact & Footer Section */}
-            <footer className="w-full px-6 py-8 sm:px-8 lg:px-12 mt-8">
+            <footer id="contact" className="w-full px-6 py-8 sm:px-8 lg:px-12 mt-8">
               <div className="max-w-4xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -475,7 +426,7 @@ export default function Home() {
                   transition={{ delay: 1.5, duration: 0.6 }}
                   className="text-center space-y-8"
                 >
-                  {/* Contact Buttons */}
+                  {/* Contact */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -486,12 +437,12 @@ export default function Home() {
                       href="mailto:nicolas.gertler@yale.edu,oliver.hime@yale.edu,leia.ryan@yale.edu?subject=Yale%20AI%20Hackathon%202025%20Sponsorship"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
-                      className="inline-flex items-center space-x-3 px-6 py-3 bg-card-bg border border-card-border rounded-xl hover:border-accent/50 hover:bg-card-bg/80 transition-all duration-300 text-foreground/80 hover:text-foreground font-mono text-sm group shadow-lg hover:shadow-accent/10"
+                      className="inline-flex items-center space-x-3 px-6 py-3 bg-card-bg/80 backdrop-blur border border-card-border rounded-xl hover:border-accent/50 hover:bg-card-bg/90 transition-all duration-300 text-foreground/80 hover:text-foreground font-sans text-sm group shadow-lg hover:shadow-accent/10"
                     >
                       <svg className="w-5 h-5 text-accent group-hover:text-accent-hover transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      <span>sponsorship inquiries</span>
+                      <span>contact the organizers</span>
                       <motion.span 
                         className="text-accent group-hover:text-accent-hover transition-colors"
                         animate={{ x: [0, 3, 0] }}
@@ -500,7 +451,7 @@ export default function Home() {
                         →
                       </motion.span>
                     </motion.a>
-                    <div className="text-xs text-foreground/70 font-mono">
+                    <div className="text-xs text-foreground/70 font-sans">
                       general contact: <a href="mailto:nicolas.gertler@yale.edu" className="text-accent hover:text-accent-hover">nicolas.gertler@yale.edu</a>
                     </div>
                   </motion.div>
@@ -515,7 +466,7 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 2.0, duration: 0.6 }}
-                    className="text-xs text-foreground/80 font-mono"
+                    className="text-xs text-foreground/80 font-sans"
                   >
                      building deployable ai, not demos
                   </motion.div>
