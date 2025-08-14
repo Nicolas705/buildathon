@@ -15,7 +15,7 @@ const YaleBackground = memo(function YaleBackground() {
       aria-hidden
     >
       <Image
-        src="/newdarkbackground.png"
+        src="/newbackground.png"
         alt="Yale AI Hackathon background"
         fill
         priority

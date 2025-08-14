@@ -314,7 +314,7 @@ export default function Home() {
                   
                   <motion.h1
                     variants={itemVariants}
-                    className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] tracking-tight"
+                    className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground tracking-tight drop-shadow-lg"
                   >
                     Build AI that ships.
                   </motion.h1>
@@ -326,10 +326,10 @@ export default function Home() {
                     transition={{ delay: 0.8, duration: 0.8 }}
                     className="-mt-4"
                   >
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-normal text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-normal text-foreground drop-shadow-md">
                       36-hour AI-native hackathon focused on deployable, production-grade builds.
                     </div>
-                    <div className="mt-4 text-base sm:text-lg text-white/85 font-sans drop-shadow-[0_1px_6px_rgba(0,0,0,0.6)]">Early November 2025 • Yale University, New Haven • Hosted by Yale Entrepreneurial Society (YES)</div>
+                    <div className="mt-4 text-base sm:text-lg text-foreground font-sans drop-shadow-sm">Early November 2025 • Yale University, New Haven • Hosted by Yale Entrepreneurial Society (YES)</div>
                   </motion.div>
 
                   {/* CTA */}
@@ -339,7 +339,7 @@ export default function Home() {
                         href="mailto:nicolas.gertler@yale.edu?subject=Yale%20AI%20Hackathon%20Updates&body=Hi%2C%20please%20notify%20me%20when%20participant%20applications%20open.%20Thank%20you!"
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.99 }}
-                        className="inline-flex items-center space-x-2 px-6 py-3 bg-card-bg/80 backdrop-blur border border-card-border text-foreground font-medium rounded-md font-sans hover:border-accent/50"
+                        className="inline-flex items-center space-x-2 px-6 py-3 bg-card-bg backdrop-blur border border-card-border text-foreground font-medium rounded-md font-sans hover:border-accent/50"
                       >
                         <span>Get updates</span>
                         <span>→</span>
@@ -354,7 +354,9 @@ export default function Home() {
             <section id="about" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
                 <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
-                  <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">About</h2>
+                  <div className="font-sans text-accent text-sm mb-3 tracking-wide uppercase">
+                    <span className="text-foreground/50">$</span> hackathon.about()
+                  </div>
                   <p className="text-foreground/80 leading-relaxed">
                     This November, the Yale Entrepreneurial Society (YES) will host a 36-hour hackathon uniting high-signal student builders — developers, designers, and researchers — to ship AI-native products designed for real-world deployment. We bias toward production-ready: scalable, technically sound, and immediately applicable over flashy demos.
                   </p>
@@ -368,7 +370,9 @@ export default function Home() {
             {/* Tracks */}
             <section id="tracks" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
-                <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">Tracks</h2>
+                <div className="font-sans text-accent text-sm mb-3 tracking-wide uppercase">
+                  <span className="text-foreground/50">$</span> hackathon.tracks()
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {tracks.map((track) => (
                     <div key={track.name} className="bg-card-bg border border-card-border rounded-2xl p-6">
@@ -406,7 +410,9 @@ export default function Home() {
             <section id="criteria" className="relative px-6 sm:px-8 lg:px-12 w-full mt-8">
               <div className="max-w-5xl mx-auto">
                 <div className="bg-card-bg border border-card-border rounded-2xl p-6 sm:p-8">
-                  <h2 className="font-sans text-foreground text-sm sm:text-base font-medium mb-3">Criteria</h2>
+                  <div className="font-sans text-accent text-sm mb-3 tracking-wide uppercase">
+                    <span className="text-foreground/50">$</span> hackathon.criteria()
+                  </div>
                   <ol className="list-decimal list-inside space-y-2 text-sm text-foreground/85">
                     <li>Deployment readiness: reliability, basic security, and infra choices.</li>
                     <li>Technical depth: modeling, data pipeline, and systems tradeoffs.</li>

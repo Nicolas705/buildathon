@@ -3,17 +3,19 @@
 
 :root {
   --background: #0f0f0f;
-  --foreground: #e4e4e7;
-  --accent: #00356B; /* Yale Blue */
-  --accent-hover: #0A4FA3;
-  --card-bg: #121212;
-  --card-border: #242424;
+  --foreground: #1a1a1a; /* dark text for light background */
+  --foreground-light: #e4e4e7; /* light text for dark cards */
+  --accent: #3b82f6; /* refined blue accent */
+  --accent-hover: #2563eb;
+  --card-bg: rgba(255, 255, 255, 0.92); /* light cards with transparency */
+  --card-border: rgba(0, 0, 0, 0.12);
   --grid-color: #1a1a1a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-light: var(--foreground-light);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-card-bg: var(--card-bg);
